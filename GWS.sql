@@ -65,7 +65,7 @@ CREATE TABLE Review (
     wine_id INT NOT NULL,
     rating INT,
     country VARCHAR(255),
-    description TEXT,
+    designation VARCHAR(255),
     province VARCHAR(255),
     regions VARCHAR(255),
     user_id INT NOT NULL,
