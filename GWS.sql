@@ -65,7 +65,7 @@ CREATE TABLE Review (
     wine_id INT NOT NULL,
     rating INT,
     country VARCHAR(255),
-    designation VARCHAR(255),
+    description TEXT,
     province VARCHAR(255),
     regions VARCHAR(255),
     user_id INT NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE Winery (
     winery_name VARCHAR(255) NOT NULL,
     location_id INT NOT NULL,
     rating_id INT,
-    verified BOOLEAN DEFAULT False,
+    verified BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (rating_id)
         REFERENCES Ratings (rating_id),
     FOREIGN KEY (location_id)
