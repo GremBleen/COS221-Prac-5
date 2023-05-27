@@ -30,6 +30,7 @@ CREATE TABLE users (
 -- Wines Table
 CREATE TABLE Wine (
     wine_id INT PRIMARY KEY NOT NULL,
+    winery_id INT NOT NULL,
     wine_name VARCHAR(255) NOT NULL,
     wine_type VARCHAR(255) NOT NULL,
     vintage DATE,
@@ -48,7 +49,9 @@ CREATE TABLE Wine (
     quality INT,
     price DECIMAL(8 , 2 ),
     FOREIGN KEY (region_id)
-        REFERENCES Region (region_id)
+        REFERENCES Region (region_id),
+	 FOREIGN KEY (winery_id)
+        REFERENCES Winery (winery_id)
 );
 
 -- Ratings Table
@@ -101,17 +104,6 @@ CREATE TABLE Wine_Tasting_Information (
         REFERENCES Winery (winery_id)
 );
 
--- WineCatalog Table
-CREATE TABLE Wine_Catalog (
-    winery_id INT,
-    wine_id INT,
-    PRIMARY KEY (winery_id , wine_id),
-    FOREIGN KEY (winery_id)
-        REFERENCES Winery (winery_id),
-    FOREIGN KEY (wine_id)
-        REFERENCES Wine (wine_id)
-);
-
 -- EventsAndFestivals Table
 CREATE TABLE Events_And_Festivals (
     event_id INT PRIMARY KEY,
@@ -161,23 +153,15 @@ CREATE TABLE Wine_Trails_And_Routes (
 -- WineVarietals Table
 CREATE TABLE Wine_Varietals (
     varietal_id INT PRIMARY KEY,
+    winery_id INT NOT NULL, 
     varietal_name VARCHAR(255) NOT NULL,
     region_id INT NOT NULL,
     description TEXT,
     flavors TEXT,
     characteristics TEXT,
-    food_pairings TEXT
-);
-
--- WineryVarietals Table
-CREATE TABLE Winery_Varietals (
-    winery_id INT,
-    varietal_id INT,
-    PRIMARY KEY (winery_id , varietal_id),
+    food_pairings TEXT,
     FOREIGN KEY (winery_id)
-        REFERENCES Winery (winery_id),
-    FOREIGN KEY (varietal_id)
-        REFERENCES Wine_Varietals (varietal_id)
+        REFERENCES Winery (winery_id)
 );
 
 -- WineClubsMemberships Table
