@@ -1,0 +1,30 @@
+body{
+    margin: 0px;
+    justify-content: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.topnav {
+    padding-top:10px;
+    float: top;
+    width: 100%;
+    background-color: #F45B69;
+    overflow: hidden;
+    text-align: center;
+}
+
+.topnav a {
+    color: #FFFFFF;
+    text-align: center;
+    padding: 5px 16px;
+    text-decoration: none;
+    font-size: 25px;
+}
+
+.topnav a:hover {
+    font-size: 150%;
+}
+
+.topnav button:hover{
+    text-decoration: underline;
+}
