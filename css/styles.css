@@ -28,3 +28,67 @@ body{
 .topnav button:hover{
     text-decoration: underline;
 }
+
+.container {
+    position: relative;
+    height: 100vh;
+}
+
+.logo {
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+    width: 44%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: right;
+}
+
+.register {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    width: 44%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formname {
+    color: #456990;
+    font-size: 7.5rem;
+    text-decoration: underline #456990 2px;
+    height: 8rem;
+}
+
+form input, form button {
+    margin-bottom: 1.5rem;
+}
+
+form input {
+    width: 22rem;
+    height: 1.5rem;
+    border-width: 0px;
+    margin-top: 0.2rem;
+    background-color: #cccccc;
+}
+
+form button {
+    color: #FFFFFF;
+    width: 5rem;
+    padding: 1rem;
+    align-content: center;
+    background-color: #F45B69;
+    border-width: 0px;
+    border-radius: 0.5rem;
+    box-shadow: 2px 3px 8px black;
+}
+
