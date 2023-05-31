@@ -18,7 +18,13 @@
                 <input type="search" name="search" id="search" placeholder="Search for">
             </div>
             <div id="filter">
-                <p>Filter by</p>
+                <label for="attributes">Filter by:</label>
+                <select name="attributes" id="attributes">
+                    <option value="V">V</option>
+                    <option value="S">S</option>
+                    <option value="O">O</option>
+                    <option value="A">A</option>
+                </select>
             </div>
         </div>
         <div class="wine-cards">
