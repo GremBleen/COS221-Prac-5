@@ -92,3 +92,47 @@ form button {
     box-shadow: 2px 3px 8px black;
 }
 
+/* after login and register */
+.container-a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2rem;
+    padding-bottom: 1.5rem;
+}
+
+.wine-cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wine {
+    display: flex;
+    flex: 1;
+    color: #FFFFFF;
+    width: 20rem;
+    background-color: #456990;
+    margin: 1rem;
+    padding: 0.4rem;
+    border-radius: 1.2rem;
+    max-width: 28rem;
+}
+
+.wine img {
+    border-radius: 1rem 0 0 1rem;
+    margin-right: 1rem;
+}
+
+#search {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #cccccc;
+    border-width: 0px;
+}
