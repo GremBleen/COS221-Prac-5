@@ -29,6 +29,7 @@ body{
     text-decoration: underline;
 }
 
+/* login and register */
 .container {
     position: relative;
     height: 100vh;
@@ -92,7 +93,7 @@ form button {
     box-shadow: 2px 3px 8px black;
 }
 
-/* after login and register */
+/* wine */
 .container-a {
     display: flex;
     flex-direction: column;
@@ -130,10 +131,37 @@ form button {
     margin-right: 1rem;
 }
 
-#search {
+input {
     padding: 0.5rem;
     border-radius: 0.5rem;
     background-color: #cccccc;
     border-width: 0px;
     margin-bottom: 15px;
 }
+
+/* wineries */
+.winery-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.vine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem;
+    background-color: #114B5F;
+    border-radius: 1.2rem;
+    color: #FFFFFF;
+}
+
+#search-wineries {
+    margin-top: 2rem;
+}
+
+.vine-photo {
+    margin-right: 15px;
+}
+
+

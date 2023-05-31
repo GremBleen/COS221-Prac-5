@@ -15,7 +15,7 @@
     <div class="container-a">
         <div class="controls">
             <div>
-                <input type="search" name="search" id="search" placeholder="Search for">
+                <input type="search" name="search" id="search-wines" placeholder="Search for">
             </div>
             <div id="filter">
                 <label for="attributes">Filter by:</label>
