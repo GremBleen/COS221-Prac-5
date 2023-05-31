@@ -20,6 +20,27 @@ CREATE TABLE Location (
         REFERENCES Region (region_id)
 );
 
+-- Ratings Table
+CREATE TABLE Ratings (
+    rating_id INT PRIMARY KEY,
+    rating_title VARCHAR(255) NOT NULL,
+    rating DECIMAL(2 , 1 ) NOT NULL,
+    comment VARCHAR(255)
+);
+
+-- Winery Table
+CREATE TABLE Winery (
+    winery_id INT PRIMARY KEY,
+    winery_name VARCHAR(255) NOT NULL,
+    location_id INT NOT NULL,
+    rating_id INT,
+    verified BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (rating_id)
+        REFERENCES Ratings (rating_id),
+    FOREIGN KEY (location_id)
+        REFERENCES Location (location_id)
+);
+
 -- Users Table
 CREATE TABLE users (
     user_id INT PRIMARY KEY,
@@ -54,14 +75,6 @@ CREATE TABLE Wine (
         REFERENCES Winery (winery_id)
 );
 
--- Ratings Table
-CREATE TABLE Ratings (
-    rating_id INT PRIMARY KEY,
-    rating_title VARCHAR(255) NOT NULL,
-    rating DECIMAL(2 , 1 ) NOT NULL,
-    comment VARCHAR(255)
-);
-
 -- Review Table
 CREATE TABLE Review (
     review_id INT PRIMARY KEY,
@@ -77,19 +90,6 @@ CREATE TABLE Review (
     FOREIGN KEY (user_id)
         REFERENCES users (user_id),
     CHECK (rating >= 1 AND rating <= 100)
-);
-
--- Winery Table
-CREATE TABLE Winery (
-    winery_id INT PRIMARY KEY,
-    winery_name VARCHAR(255) NOT NULL,
-    location_id INT NOT NULL,
-    rating_id INT,
-    verified BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (rating_id)
-        REFERENCES Ratings (rating_id),
-    FOREIGN KEY (location_id)
-        REFERENCES Location (location_id)
 );
 
 -- Wine Tasting Information
@@ -111,7 +111,7 @@ CREATE TABLE Events_And_Festivals (
     event_date DATE,
     location_id INT NOT NULL,
     ticket_price DECIMAL(8 , 2 ),
-    desciption TEXT,
+    description TEXT,
     rating_id INT,
     FOREIGN KEY (rating_id)
         REFERENCES Ratings (rating_id),
