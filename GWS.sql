@@ -45,7 +45,8 @@ CREATE TABLE Winery (
 CREATE TABLE users (
     user_id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL
+    email VARCHAR(255) NOT NULL,
+    password varchar(255) NOT NULL
 );
 
 -- Wines Table
