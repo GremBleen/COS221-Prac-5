@@ -19,7 +19,7 @@
             </div>
             <div id="filter">
                 <label for="attributes">Filter by:</label>
-                <select name="attributes" id="attributes">
+                <select name="attributes" id="attributes" style="padding: 0.8rem; border-radius: 0.5rem; background-color: #F45B69; color:white; border-width: 0px;">
                     <option value="V">V</option>
                     <option value="S">S</option>
                     <option value="O">O</option>

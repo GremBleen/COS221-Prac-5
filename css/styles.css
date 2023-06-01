@@ -164,4 +164,15 @@ input {
     margin-right: 15px;
 }
 
+/* reviews */
 
+select {
+    color: #FFFFFF;
+    width: 5rem;
+    padding: 1rem;
+    align-content: center;
+    background-color: #F45B69;
+    border-width: 0px;
+    border-radius: 0.5rem;
+    box-shadow: 2px 3px 8px black;
+}
