@@ -1,10 +1,8 @@
 <?php
-// Replace with your actual database connection details
 $servername = "localhost";
-$username = "u18234039";
+$username = "u12345678";
 $password = "OF3ISTXY3YUFAOAF2OK7L6RUUPP7ZVVM";
-$dbname = "u18234039_GWS";
-
+$dbname = "u12345678_GWS";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -192,6 +190,37 @@ function SortWinesByName($conn, $wine_name) {
     }
 }
 
+function getWinesByWinery($conn, $winery_id){
+    $sql = "SELECT w.`wine_name`, w.`wine_type`, w.`vintage`, w.`quality`, w.`price`, w.`winery_id`, wn.`winery_name` FROM `wine` AS w INNER JOIN `winery` AS wn ON w.`winery_id` = wn.`winery_id` WHERE w.`winery_id` = '$winery_id'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $wines = array();
+        while($row = $result->fetch_assoc()) {
+            $wine = array(
+                "winery_id" => $row["winery_id"],
+                "winery_name" => $row["winery_name"],
+                "wine_name" => $row["wine_name"],
+                "wine_type" => $row["wine_type"],
+                "vintage" => $row["vintage"],
+                "quality" => $row["quality"],
+                "price" => $row["price"]              
+            );
+            array_push($wines, $wine);
+        }
+        return json_encode(array(
+            "status" => "success",
+            "timestamp" => strval(time() * 1000), 
+            "data" => $wines
+        ));
+    } else {
+        return json_encode(array(
+            "status" => "error",
+            "timestamp" => strval(time() * 1000),
+            "message" => "No data found"
+        ));
+    }
+}
+
 header('Content-Type: application/json');
 if (isset($_GET['type'])) {
     $type = $_GET['type'];
@@ -209,6 +238,9 @@ if (isset($_GET['type'])) {
     } else if($type === 'SortWinesByName') {
         $wine_name = $_GET['wine_name'];
         echo SortWinesByName($conn, $wine_name);
+    } else if($type === 'getWinesByWinery') {
+        $winery_id = $_GET['winery_id'];
+        echo getWinesByWinery($conn, $winery_id);
     }
         else {
         echo json_encode(array(
