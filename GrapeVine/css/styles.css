@@ -1,11 +1,11 @@
-body{
+body {
     margin: 0px;
     justify-content: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .topnav {
-    padding-top:10px;
+    padding-top: 10px;
     float: top;
     width: 100%;
     background-color: #F45B69;
@@ -13,7 +13,7 @@ body{
     text-align: center;
 }
 
-.topnav a {
+.topnavlink {
     color: #FFFFFF;
     text-align: center;
     padding: 5px 16px;
@@ -21,79 +21,22 @@ body{
     font-size: 25px;
 }
 
-.topnav a:hover {
+.topnavlink:hover {
     font-size: 150%;
 }
 
-.topnav button:hover{
+.topnavlogin {
+    color: #FFFFFF;
+    text-align: center;
+    padding: 5px 16px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.topnavlogin:hover {
     text-decoration: underline;
 }
 
-/* login and register */
-.container {
-    position: relative;
-    height: 100vh;
-}
-
-.logo {
-    position: absolute;
-    top: 1rem;
-    left: 2rem;
-    width: 44%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: right;
-}
-
-.register {
-    position: absolute;
-    top: 1rem;
-    right: 2rem;
-    width: 44%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.formname {
-    color: #456990;
-    font-size: 7.5rem;
-    text-decoration: underline #456990 2px;
-    height: 8rem;
-}
-
-form input, form button {
-    margin-bottom: 1.5rem;
-}
-
-form input {
-    width: 22rem;
-    height: 1.5rem;
-    border-width: 0px;
-    margin-top: 0.2rem;
-    background-color: #cccccc;
-}
-
-form button {
-    color: #FFFFFF;
-    width: 5rem;
-    padding: 1rem;
-    align-content: center;
-    background-color: #F45B69;
-    border-width: 0px;
-    border-radius: 0.5rem;
-    box-shadow: 2px 3px 8px black;
-}
-
-/* wine */
 .container-a {
     display: flex;
     flex-direction: column;
