@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,94 +16,200 @@ require_once("php/navbar.php");
         <div>
             <input type="search" name="search" id="search-wines" placeholder="Search for">
         </div>
-        <div id="filter">
-            <label for="attributes">Filter by:</label>
-            <select name="attributes" id="attributes" style="padding: 0.8rem; border-radius: 0.5rem; background-color: #F45B69; color:white; border-width: 0px;">
-                <option value="V">V</option>
-                <option value="S">S</option>
-                <option value="O">O</option>
-                <option value="A">A</option>
+        <div id="sort">
+            <label for="regions">Regions: </label>
+            <select name="regions" id="regions"
+                    style="padding: 0.8rem; border-radius: 0.5rem; background-color: #F45B69; color:white; border-width: 0px;margin: 5px">
+                <option value="default" selected="selected">Select</option>
+                <option value="1">Napa Valley</option>
+                <option value="2">Santa Ynez Valley</option>
+                <option value="3">Barolo</option>
+                <option value="4">Chianti Classico</option>
+                <option value="5">Cerasuolo di Vittoria</option>
+            </select>
+            <br>
+            <label for="wineries">Wineries: </label>
+            <select name="wineries" id="wineries"
+                    style="padding: 0.8rem; border-radius: 0.5rem; background-color: #F45B69; color:white; border-width: 0px; margin: 5px">
+                <option value="default" selected="selected">Select</option>
+                <option value="1">Kirkland Signature</option>
+                <option value="2">Kuentz-Baz</option>
+                <option value="3">Herdade Grande</option>
+                <option value="4">Spier</option>
+                <option value="5">Feudi del</option>
+            </select>
+            <br>
+            <label for="attributes">Sort by: </label>
+            <select name="attributes" id="attributes"
+                    style="padding: 0.8rem; border-radius: 0.5rem; background-color: #F45B69; color:white; border-width: 0px; margin: 5px">
+                <option value="default" selected="selected">Select</option>
+                <option value="price">Price</option>
+                <option value="quality">Quality</option>
             </select>
         </div>
+        <div>
+            <input type="button" id="submit" value="Submit" style="text-align: center; margin: 5px" onclick="filterWines()">
+            <input type="button" id="reset" value="Reset" style="text-align: center; margin: 5px" onclick="reset()">
+        </div>
     </div>
-    <div class="wine-cards">
-        <div class="wine">
-            <div class="wine-photo">
-                <img src="img/pexels-kenneth-2912108.jpg" alt="wine photo" height="340" width="200">
-            </div>
-            <div class="specification">
-                <h3 class="wine-name">Wine Name</h3>
-                <h4 class="producers">Produced by winery</h4>
-                <h4 class="region">Region</h4>
-                <ul>
-                    <li>attribute 1</li>
-                    <li>attribute 2</li>
-                </ul>
-                <h4 class="rating">Rating</h4>
-            </div>
-        </div>
-        <div class="wine">
-            <div class="wine-photo">
-                <img src="img/pexels-kenneth-2912108.jpg" alt="wine photo" height="340" width="200">
-            </div>
-            <div class="specification">
-                <h3 class="wine-name">Wine Name</h3>
-                <h4 class="producers">Produced by winery</h4>
-                <h4 class="region">Region</h4>
-                <ul>
-                    <li>attribute 1</li>
-                    <li>attribute 2</li>
-                </ul>
-                <h4 class="rating">Rating</h4>
-            </div>
-        </div>
-        <div class="wine">
-            <div class="wine-photo">
-                <img src="img/pexels-kenneth-2912108.jpg" alt="wine photo" height="340" width="200">
-            </div>
-            <div class="specification">
-                <h3 class="wine-name">Wine Name</h3>
-                <h4 class="producers">Produced by winery</h4>
-                <h4 class="region">Region</h4>
-                <ul>
-                    <li>attribute 1</li>
-                    <li>attribute 2</li>
-                </ul>
-                <h4 class="rating">Rating</h4>
-            </div>
-        </div>
-        <div class="wine">
-            <div class="wine-photo">
-                <img src="img/pexels-kenneth-2912108.jpg" alt="wine photo" height="340" width="200">
-            </div>
-            <div class="specification">
-                <h3 class="wine-name">Wine Name</h3>
-                <h4 class="producers">Produced by winery</h4>
-                <h4 class="region">Region</h4>
-                <ul>
-                    <li>attribute 1</li>
-                    <li>attribute 2</li>
-                </ul>
-                <h4 class="rating">Rating</h4>
-            </div>
-        </div>
-        <div class="wine">
-            <div class="wine-photo">
-                <img src="img/pexels-kenneth-2912108.jpg" alt="wine photo" height="340" width="200">
-            </div>
-            <div class="specification">
-                <h3 class="wine-name">Wine Name</h3>
-                <h4 class="producers">Produced by winery</h4>
-                <h4 class="region">Region</h4>
-                <ul>
-                    <li>attribute 1</li>
-                    <li>attribute 2</li>
-                </ul>
-                <h4 class="rating">Rating</h4>
-            </div>
-        </div>
+    <div id="wine_cards" class="wine-cards">
     </div>
 </div>
-<script src = "js/scripts.js"></script>
+<script>
+    function loadWines()
+    {
+        let display = document.getElementById("wine_cards");
+
+        display.innerHTML = "";
+
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function ()
+        {
+            if (req.readyState === 4 && req.status === 200)
+            {
+                let data = JSON.parse(req.responseText);
+
+                for (let i = 0; i < data.data.length; i++)
+                {
+                    if (data.data[i].rating === null)
+                    {
+                        data.data[i].rating = "NA";
+                    }
+                    else
+                    {
+                        data.data[i].rating = Math.round(data.data[i].rating * 100) / 100.00;
+                    }
+
+                    display.innerHTML += '<div class="wine">' +
+                        '<div class="wine-photo">' +
+                        '<img src="img/pexels-kenneth-2912108.jpg" alt="wine photo" height="340" width="200">' +
+                        '</div>' +
+                        '<div class="specification">' +
+                        '<h3 class="wine-name">' + data.data[i].wine_name + '</h3>' +
+                        '<h4 class="producers">Winery: ' + data.data[i].winery_name + '</h4>' +
+                        '<h4 class="region">Region: ' + data.data[i].region_name + '</h4>' +
+                        '<ul>' +
+                        '<li>Type: ' + data.data[i].wine_type + '</li>' +
+                        '<li>Vintage: ' + data.data[i].vintage + '</li>' +
+                        '<li>Quality: ' + data.data[i].quality + '</li>' +
+                        '<li>Price:' + data.data[i].price + '</li>' +
+                        '</ul>' +
+                        '<h4 class="rating">Rating: ' + data.data[i].rating  + '</h4>' +
+                        '</div>' +
+                        '</div>';
+                }
+            }
+        };
+
+        req.open("POST", "../GWSAPI.php?type=getAllWines", false);
+        req.send();
+    }
+
+    loadWines();
+
+    function filterWines()
+    {
+        let display = document.getElementById("wine_cards");
+
+        display.innerHTML = "";
+
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function ()
+        {
+            if (req.readyState === 4 && req.status === 200)
+            {
+                let data = JSON.parse(req.responseText);
+
+                if(data.status === "error")
+                {
+                    display.innerHTML = "Error: " + data.message;
+                    return;
+                }
+
+                for (let i = 0; i < data.data.length; i++)
+                {
+                    if (data.data[i].rating === null)
+                    {
+                        data.data[i].rating = "NA";
+                    }
+                    else
+                    {
+                        data.data[i].rating = Math.round(data.data[i].rating * 100) / 100.00;
+                    }
+
+                    display.innerHTML += '<div class="wine">' +
+                        '<div class="wine-photo">' +
+                        '<img src="img/pexels-kenneth-2912108.jpg" alt="wine photo" height="340" width="200">' +
+                        '</div>' +
+                        '<div class="specification">' +
+                        '<h3 class="wine-name">' + data.data[i].wine_name + '</h3>' +
+                        '<h4 class="producers">Winery: ' + data.data[i].winery_name + '</h4>' +
+                        '<h4 class="region">Region: ' + data.data[i].region_name + '</h4>' +
+                        '<ul>' +
+                        '<li>Type: ' + data.data[i].wine_type + '</li>' +
+                        '<li>Vintage: ' + data.data[i].vintage + '</li>' +
+                        '<li>Quality: ' + data.data[i].quality + '</li>' +
+                        '<li>Price:' + data.data[i].price + '</li>' +
+                        '</ul>' +
+                        '<h4 class="rating">Rating: ' + data.data[i].rating + '</h4>' +
+                        '</div>' +
+                        '</div>';
+                }
+            }
+        };
+
+        let name = document.getElementById("search-wines");
+        let region = document.getElementById("regions");
+        let winery = document.getElementById("wineries");
+        let sort = document.getElementById("attributes");
+
+        if (name.value !== "")
+        {
+            let url = "../GWSAPI.php?type=SortWinesByName&wine_name=" + name.value;
+            req.open("POST", url, false);
+            req.send();
+        }
+        else if (region.value !== "default")
+        {
+            let url = "../GWSAPI.php?type=SortWinesByRegion&region_id=" + region.value;
+            req.open("POST", url, false);
+            req.send();
+        }
+        else if(winery.value !== "default")
+        {
+            let url = "../GWSAPI.php?type=getWinesByWinery&winery_id=" + winery.value;
+            req.open("POST", url, false);
+            req.send();
+        }
+        else if(sort.value !== "default")
+        {
+            if (sort.value === "price")
+            {
+                let url = "../GWSAPI.php?type=SortWinesByPrice";
+                req.open("POST", url, false);
+                req.send();
+            }
+            else if (sort.value === "quality")
+            {
+                let url = "../GWSAPI.php?type=SortWinesByQuality";
+                req.open("POST", url, false);
+                req.send();
+            }
+        }
+    }
+
+    function reset()
+    {
+        let name = document.getElementById("search-wines");
+        name.value = "";
+
+        let sel = document.querySelectorAll("select");
+        for (let i = 0; i < sel.length; i++)
+        {
+            sel[i].value = "default";
+        }
+        loadWines();
+    }
+</script>
 </body>
 </html>
