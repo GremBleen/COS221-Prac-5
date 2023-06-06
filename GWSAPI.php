@@ -582,6 +582,40 @@ function removeWine($conn, $wine_id, $winery_id)
     }
 }
 
+function getAttractionsByRegionId($conn, $region_id)
+{
+    $query = "SELECT attraction_name, description FROM local_attractions WHERE region_id=?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i",$region_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0)
+    {
+        $data = array();
+        while ($row = $result->fetch_assoc())
+        {
+            $td = array(
+                "attraction_name" => $row["attraction_name"],
+                "description" => $row["description"]
+            );
+            array_push($data, $td);
+        }
+        return json_encode(array(
+            "status" => "success",
+            "timestamp" => strval(time() * 1000),
+            "data" => $data
+        ));
+    } else
+    {
+        return json_encode(array(
+            "status" => "error",
+            "timestamp" => strval(time() * 1000),
+            "message" => "No data found"
+        ));
+    }
+}
+
 header('Content-Type: application/json');
 if (isset($_GET['type']))
 {
@@ -645,7 +679,13 @@ if (isset($_GET['type']))
         $wine_id = $_GET["wine_id"];
         $winery_id = $_GET["winery_id"];
         echo removeWine($conn, $wine_id, $winery_id);
-    }else
+    }
+    else if($type === "getAttractionsByRegionId")
+    {
+        $region_id = $_GET["region_id"];
+        echo getAttractionsByRegionId($conn, $region_id);
+    }
+    else
     {
         echo json_encode(array(
             "status" => "error",
