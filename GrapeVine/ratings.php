@@ -33,7 +33,7 @@ require_once("php/navbar.php")
                 for (let i = 0; i < data.data.length; i++) {
                     display.innerHTML += '<tr>' +
                         '<td class="colWineName">' + data.data[i].rating_title + '</td>' +
-                        '<td class=\"colWineName\">' + data.data[i].rating + '</td>' +
+                        '<td class=\"colWineName\" style = "vertical-align: top; color: white;">' + data.data[i].rating + '</td>' +
                         '<td style = "vertical-align: top; color: white;">' + data.data[i].comment + '</td>' +
                         '</tr>'+
                         '<tr><td colspan = "3"><br></td></tr>'+
