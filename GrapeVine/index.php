@@ -52,7 +52,7 @@ require_once("php/navbar.php");
             <input type="button" id="submit" value="Submit" style="text-align: center; margin: 5px" onclick="filterWines()">
             <input type="button" id="reset" value="Reset" style="text-align: center; margin: 5px" onclick="reset()">
         </div>
-        <form action="">
+        <form onsubmit="getFormData(); return false">
             <h3>Rating box:</h3>
             <label for="wine-id">Wine id</label>
             <input type="number" name="wine-id" id="wine-id" placeholder="enter wine id">
@@ -68,6 +68,18 @@ require_once("php/navbar.php");
     </table>
 </div>
 <script>
+    function getFormData() {
+        let wineId = document.getElementById("wine-id").value;
+        let ratingDescription = document.getElementById("rating-description").value;
+        let rating = document.getElementById("rating").value;
+        insertRating(wineId, ratingDescription, rating);
+        showRatingForm();
+    }
+
+    function insertRating(wineId, ratingDescription, rating) {
+        console.log(wineId, ratingDescription, rating);
+    }
+
     function showRatingForm() {
         let form = document.querySelector("form");
         if (form.style.display === "none") {
