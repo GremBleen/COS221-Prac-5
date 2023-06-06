@@ -8,6 +8,7 @@ session_start();
         <a href="reviews.php" class="topnavlink">Reviews</a>
         <a href="ratings.php" class="topnavlink">Ratings</a>
         <a href="manageWineries.php" class="topnavlink">Manage Wineries</a>
+        <a href="localAttractions.php" class = "topnavlink">Local Attractions</a>
     </div>
     <br>
     <div style="width:100%;">

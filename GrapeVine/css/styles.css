@@ -181,7 +181,7 @@ input {
 
 select {
     color: #FFFFFF;
-    width: 5rem;
+    width: auto;
     padding: 1rem;
     align-content: center;
     background-color: #F45B69;
