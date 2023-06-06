@@ -8,8 +8,8 @@ function encryptPassword($input)
 
 // Establish database connection using mysqli
 $servername = "localhost";
-$username = "uxxxxxxxx";
-$password = "dbpassword";
+$username = "Grem";
+$password = "0504";
 $dbname = "GWS";
 
 $conn = new mysqli($servername, $username, $password, $dbname);

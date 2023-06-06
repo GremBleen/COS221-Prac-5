@@ -61,7 +61,8 @@ body {
     display: flex;
     flex: 1;
     color: #FFFFFF;
-    width: 20rem;
+    width: 50rem;
+    height: auto;
     background-color: #456990;
     margin: 1rem;
     padding: 0.4rem;
