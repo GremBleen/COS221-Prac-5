@@ -6,6 +6,7 @@ session_start();
         <a href="index.php" class="topnavlink">Wines</a>
         <a href="wineries.php" class="topnavlink">Wineries</a>
         <a href="reviews.php" class="topnavlink">Reviews</a>
+        <a href="ratings.php" class="topnavlink">Ratings</a>
     </div>
     <br>
     <div style="width:100%;">

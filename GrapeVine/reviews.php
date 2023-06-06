@@ -11,7 +11,7 @@ require_once("php/navbar.php")
 <table class="tableOfInfo" id="tableOfInfo">
     
 </table>
-<tr><td colspan = "6"><hr style = "color: white;"></td></tr>
+<tr><td colspan = "5"><hr style = "color: white;"></td></tr>
 <script>
     function loadReviews() {
         let display = document.getElementById("tableOfInfo");
