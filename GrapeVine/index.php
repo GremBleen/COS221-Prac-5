@@ -52,7 +52,7 @@ require_once("php/navbar.php");
             <input type="button" id="submit" value="Submit" style="text-align: center; margin: 5px" onclick="filterWines()">
             <input type="button" id="reset" value="Reset" style="text-align: center; margin: 5px" onclick="reset()">
         </div>
-        <form action="">
+        <form onsubmit="getFormData(); return false">
             <h3>Rating box:</h3>
             <label for="wine-id">Wine id</label>
             <input type="number" name="wine-id" id="wine-id" placeholder="enter wine id">
@@ -67,6 +67,18 @@ require_once("php/navbar.php");
     </div>
 </div>
 <script>
+    function getFormData() {
+        let wineId = document.getElementById("wine-id").value;
+        let ratingDescription = document.getElementById("rating-description").value;
+        let rating = document.getElementById("rating").value;
+        insertRating(wineId, ratingDescription, rating);
+        showRatingForm();
+    }
+
+    function insertRating(wineId, ratingDescription, rating) {
+        console.log(wineId, ratingDescription, rating);
+    }
+
     function showRatingForm() {
         let form = document.querySelector("form");
         if (form.style.display === "none") {
@@ -103,7 +115,11 @@ require_once("php/navbar.php");
                     display.innerHTML += '<div class="wine">' +
                         '<div><h4 class="wine-name">' + data.data[i].wine_name + '</h4>' +
                         '<h5>Wine ID: ' + data.data[i].wine_id + '</h5></div>' +
+<<<<<<< HEAD
                         '<span class="info"><h4 class="producers">Winery: ' + data.data[i].winery_name + '</h4>' +
+=======
+                        '<h4 class="producers">Winery: ' + data.data[i].winery_name + '</h4>' +
+>>>>>>> main
                         '<br>' +
                         '<h4 class="region">Region: ' + data.data[i].region_name + '</h4>' +
                         '<ul>' +
