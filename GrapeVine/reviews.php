@@ -36,7 +36,7 @@ require_once("php/navbar.php")
                     display.innerHTML += '<tr>' +
                         '<td class="colWineName">' + data.data[i].wine_id + '</td>' +
                         '<td class=\"colWineName\">' + data.data[i].wine_name + '</td>' +
-                        '<td style = "vertical-align: top; color: white;">' + data.data[i].rating + '</td>' +
+                        '<td class=\"colWineName\" style = "vertical-align: top; color: white;">' + data.data[i].rating + '</td>' +
                         '<td style = "vertical-align: top; color: white;">' + data.data[i].designation + '</td>' +
                         '<td style = "vertical-align: top; color: white;">' + data.data[i].name + '</td>' +
                         '</tr>'+

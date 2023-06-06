@@ -1161,11 +1161,13 @@ CREATE TABLE `winery` (
   `location_id` int(11) NOT NULL,
   `rating_id` int(11) DEFAULT NULL,
   `verified` tinyint(1) DEFAULT 0,
+  `mngr_id` int NOT NULL,
   PRIMARY KEY (`winery_id`),
   KEY `rating_id` (`rating_id`),
   KEY `location_id` (`location_id`),
   CONSTRAINT `winery_ibfk_1` FOREIGN KEY (`rating_id`) REFERENCES `ratings` (`rating_id`),
-  CONSTRAINT `winery_ibfk_2` FOREIGN KEY (`location_id`) REFERENCES `location` (`location_id`)
+  CONSTRAINT `winery_ibfk_2` FOREIGN KEY (`location_id`) REFERENCES `location` (`location_id`),
+  CONSTRAINT `winery_ibfk_3` FOREIGN KEY (`mngr_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1176,11 +1178,11 @@ CREATE TABLE `winery` (
 LOCK TABLES `winery` WRITE;
 /*!40000 ALTER TABLE `winery` DISABLE KEYS */;
 INSERT INTO `winery` VALUES
-(1,'Kirkland Signature ',1,1,1),
-(2,'Kuentz-Baz',12,13,1),
-(3,'Herdade Grande',23,25,1),
-(4,'Spier',34,38,1),
-(5,'Feudi del',45,49,1);
+(1,'Kirkland Signature ',1,1,1,1),
+(2,'Kuentz-Baz',12,13,1,2),
+(3,'Herdade Grande',23,25,1,3),
+(4,'Spier',34,38,0,4),
+(5,'Feudi del',45,49,1,5);
 /*!40000 ALTER TABLE `winery` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

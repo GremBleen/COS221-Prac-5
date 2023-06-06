@@ -280,7 +280,7 @@ function getWinesByWinery($conn, $winery_id)
 
 function insertReview($conn, $wine_id, $rating, $comment)
 {
-    if (isset($_SESSION["user_id"]))
+    if (isset($_SESSION["user_id"]) && $wine_id != null && $rating != null && $comment != null)
     {
         $user_id = $_SESSION["user_id"];
         $sql = "INSERT INTO review(wine_id, rating, designation, user_id) VALUES ('$wine_id', '$rating', '$comment', '$user_id')";
@@ -296,7 +296,7 @@ function insertReview($conn, $wine_id, $rating, $comment)
         return json_encode(array(
             "status" => "error",
             "timestamp" => strval(time() * 1000),
-            "message" => "You are not logged in"
+            "message" => "Error: Please check you are logged in and you fill in every field"
         ));
     }
 }
@@ -405,6 +405,67 @@ function getAllWineries($conn)
     }
 }
 
+function addWine($conn, $wine_name, $wine_type, $wine_vintage, $wine_quality, $wine_price, $winery_id)
+{
+    if (isset($_SESSION["user_id"]))
+    {
+        $user_id = $_SESSION["user_id"];
+
+        $query = "SELECT * FROM winery JOIN location ON winery.location_id = location.location_id JOIN region ON location.region_id = region.region_id WHERE winery_id='$winery_id' AND winery.mngr_id='$user_id'";
+        $res = $conn->query($query);
+        if ($res->num_rows > 0)
+        {
+            $row = $res->fetch_assoc();
+            if ($row["verified"] === 0)
+            {
+                return json_encode(array(
+                    "status" => "error",
+                    "timestamp" => strval(time() * 1000),
+                    "message" => "Error, your winery is not verified"
+                ));
+            } else
+            {
+                $region_id = $row["region_id"];
+
+                $fixed_acidity = rand(0, 10);
+                $volatile_acidity = rand(0, 10);
+                $citric_acid = rand(0, 10);
+                $residual_sugar = rand(0, 10);
+                $chlorides = rand(0, 10);
+                $free_sulfur_dioxide = rand(0, 10);
+                $density = rand(0, 10);
+                $pH = rand(0, 10);
+                $sulphates = rand(0, 10);
+                $alcohol = rand(0, 10);
+
+                $sql = "INSERT INTO wine(winery_id, wine_name, wine_type, vintage, region_id, fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, density, pH, sulphates, alcohol, quality, price)"
+                    . "VALUES ('$winery_id', '$wine_name', '$wine_type', '$wine_vintage', '$region_id', '$fixed_acidity', '$volatile_acidity', '$citric_acid', '$residual_sugar', '$chlorides', '$free_sulfur_dioxide', '$density', '$pH', '$sulphates', '$alcohol', '$wine_quality', '$wine_price')";
+                $result = $conn->query($sql);
+
+                return json_encode(array(
+                    "status" => "success",
+                    "timestamp" => strval(time() * 1000),
+                    "message" => $result
+                ));
+            }
+        } else
+        {
+            return json_encode(array(
+                "status" => "error",
+                "timestamp" => strval(time() * 1000),
+                "message" => "Error: Please check you are logged in as a winery manager"
+            ));
+        }
+    } else
+    {
+        return json_encode(array(
+            "status" => "error",
+            "timestamp" => strval(time() * 1000),
+            "message" => "Error: Please check you are logged in and you fill in every field"
+        ));
+    }
+}
+
 header('Content-Type: application/json');
 if (isset($_GET['type']))
 {
@@ -433,28 +494,32 @@ if (isset($_GET['type']))
     {
         $winery_id = $_GET['winery_id'];
         echo getWinesByWinery($conn, $winery_id);
-    }
-    else if($type === "getAllReviews")
+    } else if ($type === "getAllReviews")
     {
         echo getAllReviews($conn);
-    }
-    else if($type === "getAllRatings")
+    } else if ($type === "getAllRatings")
     {
         echo getAllRatings($conn);
-    }
-    else if($type === "insertReview")
+    } else if ($type === "insertReview")
     {
         $wine_id = $_GET["wine_id"];
         $rating = $_GET["rating"];
         $comment = $_GET["comment"];
 
         echo insertReview($conn, $wine_id, $rating, $comment);
-    }
-    else if($type === "getAllWineries")
+    } else if ($type === "getAllWineries")
     {
         echo getAllWineries($conn);
-    }
-    else
+    } else if ($type === "addWine")
+    {
+        $wine_name = $_GET["wine_name"];
+        $wine_type = $_GET["wine_type"];
+        $wine_vintage = $_GET["wine_vintage"];
+        $wine_quality = $_GET["wine_quality"];
+        $wine_price = $_GET["wine_price"];
+        $winery_id = $_GET["winery_id"];
+        echo addWine($conn, $wine_name, $wine_type, $wine_vintage, $wine_quality, $wine_price, $winery_id);
+    } else
     {
         echo json_encode(array(
             "status" => "error",
