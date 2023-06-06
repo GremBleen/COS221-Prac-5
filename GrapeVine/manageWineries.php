@@ -33,7 +33,7 @@ require_once("php/navbar.php");
         </div>
     </div>
     <form id="addWineForm" onsubmit="addWine(); return false" style="display: none">
-        <h3 style="color: black;">Rating box:</h3>
+        <h3 style="color: black;">Add Wine:</h3>
         <label for="wine-name" style="color: black;">Wine name</label>
         <input type="text" name="wine-name" id="wine-name" placeholder="Enter wine name">
         <label for="wine-type" style="color: black;">Wine type</label>
@@ -48,13 +48,9 @@ require_once("php/navbar.php");
         <input id="cncl-btn" type="button" value="Cancel" style="background-color: #F45B69;" onclick="hideAddWineForm()">
     </form>
     <form id="removeWineForm" onsubmit="removeWine(); return false" style="display: none">
-        <h3 style="color: black;">Rating box:</h3>
+        <h3 style="color: black;">Remove Wine:</h3>
         <label for="wine-id" style="color: black;">Wine id</label>
         <input type="number" name="wine-id" id="wine-id" placeholder="Enter wine id">
-        <label for="rating-description" style="color: black;">Rating description</label>
-        <input type="text" name="rating-description" id="rating-description" placeholder="Enter rating description">
-        <label for="rating" style="color: black;">Rating</label>
-        <input type="number" name="rating" id="rating" placeholder="Enter rating" min="1" max="100" step="1">
         <input id="submit-btn" type="submit" value="Submit" style="background-color: #F45B69;">
         <input id="cncl-btn" type="button" value="Cancel" style="background-color: #F45B69;" onclick="hideRemoveWineForm()">
     </form>
@@ -200,7 +196,40 @@ require_once("php/navbar.php");
 
     function removeWine()
     {
+        let wine_id = document.getElementById("wine-id");
+        let winery_id = document.getElementById("wineries");
 
+        if (wine_id.value === "" || winery_id.value === "default")
+        {
+            alert("Error, please fill in all fields");
+            return;
+        }
+
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function ()
+        {
+            if (req.readyState === 4 && req.status === 200)
+            {
+                let data = JSON.parse(req.responseText);
+
+                if (data.status === "error")
+                {
+                    alert(data.message);
+                }
+                else
+                {
+                    alert("Wine removed!");
+                }
+            }
+        }
+
+        let url = "../GWSAPI.php?type=removeWine&wine_id=" + wine_id.value
+            + "&winery_id=" + winery_id.value;
+
+        req.open("POST", url, false);
+        req.send();
+        hideRemoveWineForm();
+        filterWines();
     }
 
     function showRemoveWineForm() {

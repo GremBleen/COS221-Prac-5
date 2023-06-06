@@ -8,13 +8,11 @@ $dbname = "gws";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-
 if ($conn->connect_error)
 {
     die("Connection failed: " . $conn->connect_error);
 }
-
-function getWinesDetails($conn, $numberOfWines = 10)
+function getWinesDetails($conn)
 {
     $sql = "SELECT wine.`wine_id`, `wine_name`,`wine_type`, `region_name`, `winery_name`, `vintage`,`quality`,`price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id GROUP BY wine.wine_id";
     $result = $conn->query($sql);
@@ -90,7 +88,7 @@ function getAllWines($conn)
 
 }
 
-function SortWinesByPrice($conn, $numberOfWines = 25)
+function SortWinesByPrice($conn)
 {
     $sql = "SELECT wine.`wine_id`, `wine_name`,`wine_type`, `region_name`, `winery_name`, `vintage`,`quality`,`price`, `region_name`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id GROUP BY wine.wine_id ORDER BY `price` ASC";
     $result = $conn->query($sql);
@@ -128,7 +126,7 @@ function SortWinesByPrice($conn, $numberOfWines = 25)
 
 }
 
-function SortWinesByQuality($conn, $numberOfWines = 25)
+function SortWinesByQuality($conn)
 {
     $sql = "SELECT wine.`wine_id`, `wine_name`,`wine_type`, `region_name`, `winery_name`, `vintage`,`quality`,`price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id GROUP BY wine.wine_id ORDER BY `quality` ASC";
     $result = $conn->query($sql);
@@ -165,10 +163,14 @@ function SortWinesByQuality($conn, $numberOfWines = 25)
     }
 }
 
-function SortWinesByRegion($conn, $region_id, $numberOfWines = 25)
+function SortWinesByRegion($conn, $region_id)
 {
-    $sql = "SELECT wine.`wine_id`, `wine_name`, `wine_type`, `region_name`, `winery_name`, `vintage`, `quality`, `price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id WHERE wine.`region_id` = '$region_id' GROUP BY wine.wine_id ORDER BY `wine_name` ASC";
-    $result = $conn->query($sql);
+    $sql = "SELECT wine.`wine_id`, `wine_name`, `wine_type`, `region_name`, `winery_name`, `vintage`, `quality`, `price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id WHERE wine.`region_id` = ? GROUP BY wine.wine_id ORDER BY `wine_name` ASC";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $region_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
     if ($result->num_rows > 0)
     {
         $wines = array();
@@ -204,9 +206,13 @@ function SortWinesByRegion($conn, $region_id, $numberOfWines = 25)
 
 function SortWinesByName($conn, $wine_name)
 {
-    $sql = "SELECT wine.`wine_id`, `wine_name`, `wine_type`, `region_name`, `winery_name`, `vintage`, `quality`, `price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id WHERE `wine_name` LIKE '%$wine_name%' GROUP BY wine.wine_id";
+    $sql = "SELECT wine.`wine_id`, `wine_name`, `wine_type`, `region_name`, `winery_name`, `vintage`, `quality`, `price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id WHERE `wine_name` LIKE ? GROUP BY wine.wine_id";
+    $obj = '%' . $wine_name . '%';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $obj);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    $result = $conn->query($sql);
     if ($result->num_rows > 0)
     {
         $wines = array();
@@ -242,8 +248,12 @@ function SortWinesByName($conn, $wine_name)
 
 function getWinesByWinery($conn, $winery_id)
 {
-    $sql = "SELECT w.`wine_id`, w.`wine_name`, w.`wine_type`, r.region_name, w.`vintage`, w.`quality`, w.`price`, w.`winery_id`, wn.`winery_name`, AVG(rating) FROM `wine` AS w INNER JOIN `winery` AS wn ON w.`winery_id` = wn.`winery_id` JOIN region AS r ON w.region_id = r.region_id LEFT JOIN review ON w.wine_id = review.wine_id WHERE w.`winery_id` = '$winery_id' GROUP BY w.wine_id";
-    $result = $conn->query($sql);
+    $sql = "SELECT w.`wine_id`, w.`wine_name`, w.`wine_type`, r.region_name, w.`vintage`, w.`quality`, w.`price`, w.`winery_id`, wn.`winery_name`, AVG(rating) FROM `wine` AS w INNER JOIN `winery` AS wn ON w.`winery_id` = wn.`winery_id` JOIN region AS r ON w.region_id = r.region_id LEFT JOIN review ON w.wine_id = review.wine_id WHERE w.`winery_id` = ? GROUP BY w.wine_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $winery_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
     if ($result->num_rows > 0)
     {
         $wines = array();
@@ -283,8 +293,13 @@ function insertReview($conn, $wine_id, $rating, $comment)
     if (isset($_SESSION["user_id"]) && $wine_id != null && $rating != null && $comment != null)
     {
         $user_id = $_SESSION["user_id"];
-        $sql = "INSERT INTO review(wine_id, rating, designation, user_id) VALUES ('$wine_id', '$rating', '$comment', '$user_id')";
-        $result = $conn->query($sql);
+        $sql = "INSERT INTO review(wine_id, rating, designation, user_id) VALUES (?, ?, ?, ?)";
+
+        $stmt=$conn->prepare($sql);
+        $stmt->bind_param("iisi", $wine_id, $rating, $comment, $user_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
 
         return json_encode(array(
             "status" => "success",
@@ -405,18 +420,62 @@ function getAllWineries($conn)
     }
 }
 
+function searchForWinery($conn, $winery_name)
+{
+    $query = "SELECT w.winery_id, w.winery_name, l.continent, l.country, r.region_name, l.address, w.verified, AVG(rt.rating) FROM `winery` AS w JOIN location AS l ON w.location_id = l.location_id JOIN region AS r ON l.region_id = r.region_id JOIN ratings AS rt ON w.rating_id = rt.rating_id WHERE w.winery_name LIKE ? GROUP BY w.winery_id;";
+    $stmt = $conn->prepare($query);
+    $obj = "%" . $winery_name . "%";
+    $stmt->bind_param("s",$obj);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0)
+    {
+        $data = array();
+        while ($row = $result->fetch_assoc())
+        {
+            $td = array(
+                "winery_id" => $row["winery_id"],
+                "winery_name" => $row["winery_name"],
+                "continent" => $row["continent"],
+                "country" => $row["country"],
+                "region_name" => $row["region_name"],
+                "address" => $row["address"],
+                "verified" => $row["verified"],
+                "rating" => $row["AVG(rt.rating)"]
+            );
+            array_push($data, $td);
+        }
+        return json_encode(array(
+            "status" => "success",
+            "timestamp" => strval(time() * 1000),
+            "data" => $data
+        ));
+    } else
+    {
+        return json_encode(array(
+            "status" => "error",
+            "timestamp" => strval(time() * 1000),
+            "message" => "No data found"
+        ));
+    }
+}
+
 function addWine($conn, $wine_name, $wine_type, $wine_vintage, $wine_quality, $wine_price, $winery_id)
 {
     if (isset($_SESSION["user_id"]))
     {
         $user_id = $_SESSION["user_id"];
+        $query = "SELECT * FROM winery JOIN location ON winery.location_id = location.location_id JOIN region ON location.region_id = region.region_id WHERE winery_id=? AND winery.mngr_id=?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ii", $winery_id, $user_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
 
-        $query = "SELECT * FROM winery JOIN location ON winery.location_id = location.location_id JOIN region ON location.region_id = region.region_id WHERE winery_id='$winery_id' AND winery.mngr_id='$user_id'";
-        $res = $conn->query($query);
         if ($res->num_rows > 0)
         {
             $row = $res->fetch_assoc();
-            if ($row["verified"] === 0)
+            if ($row["verified"] == 0)
             {
                 return json_encode(array(
                     "status" => "error",
@@ -439,8 +498,65 @@ function addWine($conn, $wine_name, $wine_type, $wine_vintage, $wine_quality, $w
                 $alcohol = rand(0, 10);
 
                 $sql = "INSERT INTO wine(winery_id, wine_name, wine_type, vintage, region_id, fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, density, pH, sulphates, alcohol, quality, price)"
-                    . "VALUES ('$winery_id', '$wine_name', '$wine_type', '$wine_vintage', '$region_id', '$fixed_acidity', '$volatile_acidity', '$citric_acid', '$residual_sugar', '$chlorides', '$free_sulfur_dioxide', '$density', '$pH', '$sulphates', '$alcohol', '$wine_quality', '$wine_price')";
-                $result = $conn->query($sql);
+                    . "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("isssiddddddddddid", $winery_id, $wine_name, $wine_type, $wine_vintage, $region_id, $fixed_acidity, $volatile_acidity, $citric_acid, $residual_sugar, $chlorides, $free_sulfur_dioxide, $density, $pH, $sulphates, $alcohol, $wine_quality, $wine_price);
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                return json_encode(array(
+                    "status" => "success",
+                    "timestamp" => strval(time() * 1000),
+                    "message" => $result
+                ));
+            }
+        } else
+        {
+            return json_encode(array(
+                "status" => "error",
+                "timestamp" => strval(time() * 1000),
+                "message" => "Error: Please check you are logged in as a winery manager"
+            ));
+        }
+    } else
+    {
+        return json_encode(array(
+            "status" => "error",
+            "timestamp" => strval(time() * 1000),
+            "message" => "Error: Please check you are logged in and you fill in every field"
+        ));
+    }
+}
+
+function removeWine($conn, $wine_id, $winery_id)
+{
+    if (isset($_SESSION["user_id"]))
+    {
+        $user_id = $_SESSION["user_id"];
+        $query = "SELECT * FROM winery JOIN location ON winery.location_id = location.location_id JOIN region ON location.region_id = region.region_id WHERE winery_id=? AND winery.mngr_id=?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ii", $winery_id, $user_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if ($res->num_rows > 0)
+        {
+            $row = $res->fetch_assoc();
+            if ($row["verified"] == 0)
+            {
+                return json_encode(array(
+                    "status" => "error",
+                    "timestamp" => strval(time() * 1000),
+                    "message" => "Error, your winery is not verified"
+                ));
+            } else
+            {
+                $sql = "DELETE FROM wine WHERE wine_id=?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $wine_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
                 return json_encode(array(
                     "status" => "success",
@@ -510,6 +626,10 @@ if (isset($_GET['type']))
     } else if ($type === "getAllWineries")
     {
         echo getAllWineries($conn);
+    } else if ($type === "searchForWinery")
+    {
+        $winery_name = $_GET["winery_name"];
+        echo searchForWinery($conn, $winery_name);
     } else if ($type === "addWine")
     {
         $wine_name = $_GET["wine_name"];
@@ -519,7 +639,13 @@ if (isset($_GET['type']))
         $wine_price = $_GET["wine_price"];
         $winery_id = $_GET["winery_id"];
         echo addWine($conn, $wine_name, $wine_type, $wine_vintage, $wine_quality, $wine_price, $winery_id);
-    } else
+    }
+    else if ($type === "removeWine")
+    {
+        $wine_id = $_GET["wine_id"];
+        $winery_id = $_GET["winery_id"];
+        echo removeWine($conn, $wine_id, $winery_id);
+    }else
     {
         echo json_encode(array(
             "status" => "error",

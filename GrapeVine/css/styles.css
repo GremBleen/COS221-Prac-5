@@ -52,7 +52,7 @@ body {
     padding-bottom: 1.5rem;
 }
 
-.wine-name{
+.wine-name {
     display: flex;
     flex-basis: 270px;
     color: #F45B69;
@@ -62,7 +62,7 @@ body {
     justify-content: center;
 }
 
-.wine-cards{
+.wine-cards {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
@@ -72,7 +72,7 @@ body {
     width: 90%;
 }
 
-.wine-id{
+.wine-id {
     display: flex;
     flex-basis: 270px;
     color: #F45B69;
@@ -92,12 +92,12 @@ body {
     padding: 5px;
 }
 
-.rating{
+.rating {
     margin: auto;
     padding: 5px;
 }
 
-.info{
+.info {
     margin: 10px;
 }
 
@@ -146,19 +146,21 @@ input {
     color: #FFFFFF;
 }
 
-.tableOfInfo{
-    width:90%;
+.tableOfInfo {
+    width: 90%;
     background-color: #456990;
-    border-radius:6px;
+    border-radius: 6px;
     padding: 40px;
     text-align: left;
 }
-.tableHeaderRow{
+
+.tableHeaderRow {
     text-align: left;
     font-size: 24px;
     font-weight: bold;
 }
-.colWineName{
+
+.colWineName {
     color: #F45B69;
     font-size: 21px;
     max-width: 400px;
@@ -188,12 +190,12 @@ select {
     box-shadow: 2px 3px 8px black;
 }
 
-tr{
+tr {
     width: fit-content;
     max-width: 270px;
 }
 
-td{
+td {
     padding-right: 10px;
 }
 
