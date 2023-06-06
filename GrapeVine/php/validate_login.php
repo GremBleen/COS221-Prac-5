@@ -33,7 +33,7 @@ if ($stmt->affected_rows == 1) {
     $hashTest = crypt($password, $salt);
 
     if ($hashTest == $p) {
-        $query = "SELECT name FROM users WHERE email = ?";
+        $query = "SELECT user_id, name FROM users WHERE email = ?";
         $stmt2 = $conn->prepare($query);
         $stmt2->bind_param("s", $email);
         $stmt2->execute();
@@ -51,6 +51,7 @@ if ($stmt->affected_rows == 1) {
         //Set Session Variables
         $_SESSION["name"] = $row["name"];
         $_SESSION["email"] = $email;
+        $_SESSION["user_id"] = $row["user_id"];
         header("Location: ../index.php");
     } else {
         $_SESSION["loginError"] = true;

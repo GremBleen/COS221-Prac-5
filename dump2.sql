@@ -4,6 +4,11 @@
 -- ------------------------------------------------------
 -- Server version	10.4.27-MariaDB
 
+DROP DATABASE IF EXISTS gws;
+CREATE DATABASE gws;
+
+USE gws;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -390,10 +395,7 @@ CREATE TABLE `review` (
   `review_id` int(11) NOT NULL AUTO_INCREMENT,
   `wine_id` int(11) NOT NULL,
   `rating` int(11) DEFAULT NULL,
-  `country` varchar(255) DEFAULT NULL,
   `designation` varchar(255) DEFAULT NULL,
-  `province` varchar(255) DEFAULT NULL,
-  `regions` varchar(255) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`review_id`),
   KEY `wine_id` (`wine_id`),
@@ -411,26 +413,26 @@ CREATE TABLE `review` (
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
 INSERT INTO `review` VALUES
-(1,2,95,'Italy','Aromas include tropical fruit, broom, brimstone and dried herb. The palate isn\'t overly expressive, offering unripened apple, citrus and dried sage alongside brisk acidity.','Sicily & Sardinia','Willamette Valley',48),
-(2,86,77,'Italy','This is ripe and fruity, a wine that is smooth while still structured. Firm tannins are filled out with juicy red berry fruits and freshened with acidity. It\'s  already drinkable, although it will certainly be better from 2016.','Douro','Lake Michigan Shore',48),
-(3,42,99,'US','Tart and snappy, the flavors of lime flesh and rind dominate. Some green pineapple pokes through, with crisp acidity underscoring the flavors. The wine was all stainless-steel fermented.','Oregon','Navarra',36),
-(4,117,96,'US','Pineapple rind, lemon pith and orange blossom start off the aromas. The palate is a bit more opulent, with notes of honey-drizzled guava and mango giving way to a slightly astringent, semidry finish.','Michigan','Vittoria',14),
-(5,106,91,'Italy','Much like the regular bottling from 2012, this comes across as rather rough and tannic, with rustic, earthy, herbal characteristics. Nonetheless, if you think of it as a pleasantly unfussy country wine, it\'s a good companion to a hearty winter stew.','Northern Spain','Alsace',6),
-(6,73,86,'France','Blackberry and raspberry aromas show a typical Navarran whiff of green herbs and, in this case, horseradish. In the mouth, this is fairly full bodied, herbal flavors complement dark plum fruit, while the finish is fresh but grabby.','Alsace','Napa Valley',39),
-(7,7,84,'Italy','Here\'s a bright, informal red that opens with aromas of candied berry, white pepper and savory herb that carry over to the palate. It\'s balanced with fresh acidity and soft tannins.','Rheinhessen','Alexander Valley',15),
-(8,76,90,'Portugal','This dry and restrained wine offers spice in profusion. Balanced with acidity and a firm texture, it\'s very much for food.','California','Central Coast',49),
-(9,43,96,'Framce','Savory dried thyme notes accent sunnier flavors of preserved peach in this brisk, off-dry wine. It\'s fruity and fresh, with an elegant, sprightly footprint.','Mosel','Cafayate',7),
-(10,13,98,'South Africa','This has great depth of flavor with its fresh apple and pear fruits and touch of spice. It\'s off dry while balanced with acidity and a crisp texture. Drink now.','Other','Mendoza',34),
-(11,104,78,'Portugal','Soft, supple plum envelopes an oaky structure in this Cabernet, supported by 15% Merlot. Coffee and chocolate complete the picture, finishing strong at the end, resulting in a value-priced wine of attractive flavor and immediate accessibility.','Mendoza Province','Ribera del Duero',38),
-(12,39,87,'France','This is a dry wine, very spicy, with a tight, taut texture and strongly mineral character layered with citrus as well as pepper. It\'s a food wine with its almost crisp aftertaste.','Virginia','Virginia',37),
-(13,76,93,'US','Slightly reduced, this wine offers a chalky, tannic backbone to an otherwise juicy explosion of rich black cherry, the whole accented throughout by firm oak and cigar box.','Beaujolais','Oregon',19),
-(14,20,81,'France','This is dominated by oak and oak-driven aromas that include roasted coffee bean, espresso, coconut and vanilla that carry over to the palate, together with plum and chocolate. Astringent, drying tannins give it a rather abrupt finish.','Colchagua Valley','Sicilia',49),
-(15,81,79,'US','Building on 150 years and six generations of winemaking tradition, the winery trends toward a leaner style. In this good everyday sipping wine, flavors that range from pear to barely ripe pineapple prove approachable but not distinctive.','Southern Italy','Paso Robles',20),
-(16,33,90,'Portugal','Zesty orange peels and apple notes abound in this sprightly, mineral-toned Riesling. Off dry on the palate, yet racy and lean, it\'s a refreshing, easy quaffer with wide appeal.','Maule Valley','Sonoma Coast',28),
-(17,49,100,'South Africa','Balsamic vinegar and cheesy oak aromas feed into a palate that\'s braced by a bolt of acidity. A compact set of saucy red-berry and plum flavors features tobacco while the finish is mildly green in flavor, with respectable weight and balance.','Bordeaux','Terre Siciliane',13),
-(18,45,82,'Portugal','Raw black-cherry aromas are direct and simple but good. This has a juicy feel that thickens over time, with oak character and extract becoming more apparent. A flavor profile driven by dark-berry fruits and smoldering oak finishes meaty but hot.','Maipo Valley','Cerasuolo di Vittoria',34),
-(19,50,93,'South Africa','Desiccated blackberry, leather, charred wood and mint aromas carry the nose on this full-bodied, tannic, heavily oaked Tinto Fino. Flavors of clove and woodspice sit on top of blackberry fruit.','Washington','Clarksburg',47),
-(20,37,100,'France','Red fruit aromas pervade on the nose, with cigar box and menthol notes riding in the back. This blend of Merlot, Cabernet Sauvignon and Cabernet Franc is approachable now and ready to be enjoyed.','Central Italy','Beaujolais-Villages',33);
+(1,2,95,'Aromas include tropical fruit, broom, brimstone and dried herb. The palate isn\'t overly expressive, offering unripened apple, citrus and dried sage alongside brisk acidity.',48),
+(2,86,77,'This is ripe and fruity, a wine that is smooth while still structured. Firm tannins are filled out with juicy red berry fruits and freshened with acidity. It\'s  already drinkable, although it will certainly be better from 2016.',48),
+(3,42,99,'Tart and snappy, the flavors of lime flesh and rind dominate. Some green pineapple pokes through, with crisp acidity underscoring the flavors. The wine was all stainless-steel fermented.',36),
+(4,117,96,'Pineapple rind, lemon pith and orange blossom start off the aromas. The palate is a bit more opulent, with notes of honey-drizzled guava and mango giving way to a slightly astringent, semidry finish.',14),
+(5,106,91,'Much like the regular bottling from 2012, this comes across as rather rough and tannic, with rustic, earthy, herbal characteristics. Nonetheless, if you think of it as a pleasantly unfussy country wine, it\'s a good companion to a hearty winter stew.',6),
+(6,73,86,'Blackberry and raspberry aromas show a typical Navarran whiff of green herbs and, in this case, horseradish. In the mouth, this is fairly full bodied, herbal flavors complement dark plum fruit, while the finish is fresh but grabby.',39),
+(7,7,84,'Here\'s a bright, informal red that opens with aromas of candied berry, white pepper and savory herb that carry over to the palate. It\'s balanced with fresh acidity and soft tannins.',15),
+(8,76,90,'This dry and restrained wine offers spice in profusion. Balanced with acidity and a firm texture, it\'s very much for food.',49),
+(9,43,96,'Savory dried thyme notes accent sunnier flavors of preserved peach in this brisk, off-dry wine. It\'s fruity and fresh, with an elegant, sprightly footprint.',7),
+(10,13,98,'This has great depth of flavor with its fresh apple and pear fruits and touch of spice. It\'s off dry while balanced with acidity and a crisp texture. Drink now.',34),
+(11,104,78,'Soft, supple plum envelopes an oaky structure in this Cabernet, supported by 15% Merlot. Coffee and chocolate complete the picture, finishing strong at the end, resulting in a value-priced wine of attractive flavor and immediate accessibility.',38),
+(12,39,87,'This is a dry wine, very spicy, with a tight, taut texture and strongly mineral character layered with citrus as well as pepper. It\'s a food wine with its almost crisp aftertaste.',37),
+(13,76,93,'Slightly reduced, this wine offers a chalky, tannic backbone to an otherwise juicy explosion of rich black cherry, the whole accented throughout by firm oak and cigar box.',19),
+(14,20,81,'This is dominated by oak and oak-driven aromas that include roasted coffee bean, espresso, coconut and vanilla that carry over to the palate, together with plum and chocolate. Astringent, drying tannins give it a rather abrupt finish.',49),
+(15,81,79,'Building on 150 years and six generations of winemaking tradition, the winery trends toward a leaner style. In this good everyday sipping wine, flavors that range from pear to barely ripe pineapple prove approachable but not distinctive.',20),
+(16,33,90,'Zesty orange peels and apple notes abound in this sprightly, mineral-toned Riesling. Off dry on the palate, yet racy and lean, it\'s a refreshing, easy quaffer with wide appeal.',28),
+(17,49,100,'Balsamic vinegar and cheesy oak aromas feed into a palate that\'s braced by a bolt of acidity. A compact set of saucy red-berry and plum flavors features tobacco while the finish is mildly green in flavor, with respectable weight and balance.',13),
+(18,45,82,'Raw black-cherry aromas are direct and simple but good. This has a juicy feel that thickens over time, with oak character and extract becoming more apparent. A flavor profile driven by dark-berry fruits and smoldering oak finishes meaty but hot.',34),
+(19,50,93,'Desiccated blackberry, leather, charred wood and mint aromas carry the nose on this full-bodied, tannic, heavily oaked Tinto Fino. Flavors of clove and woodspice sit on top of blackberry fruit.',47),
+(20,37,100,'Red fruit aromas pervade on the nose, with cigar box and menthol notes riding in the back. This blend of Merlot, Cabernet Sauvignon and Cabernet Franc is approachable now and ready to be enjoyed.',33);
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 

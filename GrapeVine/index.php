@@ -190,6 +190,63 @@ require_once("php/navbar.php");
         }
     }
 
+    function wineReview()
+    {
+        let display = document.getElementById("wine_cards");
+
+        display.innerHTML = "";
+
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function ()
+        {
+            if (req.readyState === 4 && req.status === 200)
+            {
+                let data = JSON.parse(req.responseText);
+
+                if(data.status === "error")
+                {
+                    display.innerHTML = "Error: " + data.message;
+                    return;
+                }
+
+                for (let i = 0; i < data.data.length; i++)
+                {
+                    if (data.data[i].rating === null)
+                    {
+                        data.data[i].rating = "NA";
+                    }
+                    else
+                    {
+                        data.data[i].rating = Math.round(data.data[i].rating * 100) / 100.00;
+                    }
+
+                    display.innerHTML += '<div class="wine">' +
+                        '<div><h4 class="wine-name">' + data.data[i].wine_name + '</h4></div>' +
+                        '<h4 class="producers">Winery: ' + data.data[i].winery_name + '</h4>' +
+                        '<br>' +
+                        '<h4 class="region">Region: ' + data.data[i].region_name + '</h4>' +
+                        '<ul>' +
+                        '<li>Type: ' + data.data[i].wine_type + '</li>' +
+                        '<li>Vintage: ' + data.data[i].vintage + '</li>' +
+                        '<li>Quality: ' + data.data[i].quality + '</li>' +
+                        '<li>Price:' + data.data[i].price + '</li>' +
+                        '</ul>' +
+                        '<h4 class="rating">Rating: ' + data.data[i].rating  + '</h4>' +
+                        '</div>';
+                }
+            }
+        };
+
+        let name = document.getElementById("search-wines");
+
+        if (name.value !== "")
+        {
+            let url = "../GWSAPI.php?type=SortWinesByName&wine_name=" + name.value;
+            req.open("POST", url, false);
+            req.send();
+        }
+    }
+
     function reset()
     {
         let name = document.getElementById("search-wines");
