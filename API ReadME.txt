@@ -24,4 +24,8 @@ There are several functions defined in the code:
 
 10.getAllRatings($conn): Retrieves all ratings from the database.
 
+11.addWine($conn, $wine_name, $wine_type, $wine_vintage, $wine_quality, $wine_price, $winery_id)： Insert a new Wine to the Wine table.
+
+12.getAllWineries($conn): Retrieves all Wineries from the database
+
 Each function performs a database query using SQL statements to fetch the required data. The retrieved data is then stored in arrays and returned in JSON format.
