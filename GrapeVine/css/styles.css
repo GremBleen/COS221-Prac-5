@@ -72,6 +72,16 @@ body {
     width: 90%;
 }
 
+.wine-id{
+    display: flex;
+    flex-basis: 270px;
+    color: #F45B69;
+    font-size: 21px;
+    flex-basis: 270px;
+    text-align: center;
+    justify-content: center;
+}
+
 .producers {
     margin: auto;
     padding: 5px;

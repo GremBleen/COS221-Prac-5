@@ -101,7 +101,8 @@ require_once("php/navbar.php");
                     }
 
                     display.innerHTML += '<div class="wine">' +
-                        '<div><h4 class="wine-name">' + data.data[i].wine_name + '</h4></div>' +
+                        '<div><h4 class="wine-name">' + data.data[i].wine_name + '</h4>' +
+                        '<h5>Wine ID: ' + data.data[i].wine_id + '</h5></div>' +
                         '<h4 class="producers">Winery: ' + data.data[i].winery_name + '</h4>' +
                         '<br>' +
                         '<h4 class="region">Region: ' + data.data[i].region_name + '</h4>' +
