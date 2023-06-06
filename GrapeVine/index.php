@@ -77,7 +77,27 @@ require_once("php/navbar.php");
     }
 
     function insertRating(wineId, ratingDescription, rating) {
-        console.log(wineId, ratingDescription, rating);
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function ()
+        {
+            if (req.readyState === 4 && req.status === 200)
+            {
+                let data = JSON.parse(req.responseText);
+
+                if (data.status === "error")
+                {
+                    alert(data.message);
+                }
+                else
+                {
+                    alert("Review Submitted");
+                }
+            }
+        }
+
+        let url = "../GWSAPI.php?type=insertReview&wine_id=" + wineId + "&comment=" + ratingDescription + "&rating=" + rating;
+        req.open("POST", url, false);
+        req.send();
     }
 
     function showRatingForm() {
