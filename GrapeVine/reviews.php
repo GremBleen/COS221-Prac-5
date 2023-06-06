@@ -47,6 +47,8 @@ require_once("php/navbar.php")
         req.open("POST", "../GWSAPI.php?type=getAllReviews", false);
         req.send();
     }
+
+    loadReviews();
 </script>
 </body>
 </html>
