@@ -63,8 +63,9 @@ require_once("php/navbar.php");
             <input id="submit-btn" type="submit" value="Submit" style="background-color: #F45B69;">
         </form>
     </div>
-    <div id="wine_cards" class="wine-cards">
-    </div>
+    <table class="tableOfInfo" id="tableOfInfo">
+
+    </table>
 </div>
 <script>
     function getFormData() {
@@ -88,43 +89,46 @@ require_once("php/navbar.php");
         }
     }
 
-    function loadWines()
-    {
-        let display = document.getElementById("wine_cards");
+    function loadWines() {
+        let display = document.getElementById("tableOfInfo");
 
-        display.innerHTML = "";
+        display.innerHTML = "<tr class = \"tableHeaderRow\">" +
+            "<td style = \"color:white;\">Wine ID</td>" +
+            "<td style = \"color:white;\">Name</td>" +
+            "<td style = \"color:white;\">Produced By</td>" +
+            "<td style = \"color:white;\">Region</td>" +
+            "<td style = \"color:white;\">Information</td>" +
+            "<td style = \"color:white;\">Rating</td>" +
+            "</tr>"+
+            "<tr><td colspan = \"6\"><hr style = \"color: white;\"></td></tr>";
 
         let req = new XMLHttpRequest();
-        req.onreadystatechange = function ()
-        {
-            if (req.readyState === 4 && req.status === 200)
-            {
+        req.onreadystatechange = function () {
+            if (req.readyState === 4 && req.status === 200) {
                 let data = JSON.parse(req.responseText);
 
-                for (let i = 0; i < data.data.length; i++)
-                {
-                    if (data.data[i].rating === null)
-                    {
+                for (let i = 0; i < data.data.length; i++) {
+                    if (data.data[i].rating === null) {
                         data.data[i].rating = "NA";
-                    }
-                    else
-                    {
+                    } else {
                         data.data[i].rating = Math.round(data.data[i].rating * 100) / 100.00;
                     }
 
-                    display.innerHTML += '<div class="wine">' +
-                        '<div><h4 class="wine-name">' + data.data[i].wine_name + '</h4></div>' +
-                        '<h4 class="producers">Winery: ' + data.data[i].winery_name + '</h4>' +
-                        '<br>' +
-                        '<h4 class="region">Region: ' + data.data[i].region_name + '</h4>' +
-                        '<ul>' +
-                        '<li>Type: ' + data.data[i].wine_type + '</li>' +
-                        '<li>Vintage: ' + data.data[i].vintage + '</li>' +
-                        '<li>Quality: ' + data.data[i].quality + '</li>' +
-                        '<li>Price:' + data.data[i].price + '</li>' +
-                        '</ul>' +
-                        '<h4 class="rating">Rating: ' + data.data[i].rating  + '</h4>' +
-                        '</div>';
+                    display.innerHTML += '<tr>' +
+                        '<td class="colWineName">' + data.data[i].wine_id + '</td>' +
+                        '<td class=\"colWineName\">' + data.data[i].wine_name + '</td>' +
+                        '<td style = "vertical-align: top; color: white;">' + data.data[i].winery_name + '</td>' +
+                        '<td style = "vertical-align: top; color: white;">' + data.data[i].region_name + '</td>' +
+                        '<td style = "vertical-align: top; color: white;">' +
+                        'Type: ' + data.data[i].wine_type + '<br>' +
+                        'Vintage: ' + data.data[i].vintage + '<br>' +
+                        'Quality: ' + data.data[i].quality + '<br>' +
+                        'Price:' + data.data[i].price +
+                        '</td>' +
+                        '<td style = "vertical-align: top; color: white;">' + data.data[i].rating + '</td>' +
+                        '</tr>'+
+                        '<tr><td colspan = "6"><br></td></tr>'+
+                        '<tr><td colspan = "6"><hr style = "color: white;"></td></tr>';
                 }
             }
         };
@@ -133,51 +137,54 @@ require_once("php/navbar.php");
         req.send();
     }
 
+
     loadWines();
 
-    function filterWines()
-    {
-        let display = document.getElementById("wine_cards");
+    function filterWines() {
+        let display = document.getElementById("tableOfInfo");
 
-        display.innerHTML = "";
+        display.innerHTML = "<tr class = \"tableHeaderRow\">" +
+            "<td style = \"color:white;\">Wine ID</td>" +
+            "<td style = \"color:white;\">Name</td>" +
+            "<td style = \"color:white;\">Produced By</td>" +
+            "<td style = \"color:white;\">Region</td>" +
+            "<td style = \"color:white;\">Information</td>" +
+            "<td style = \"color:white;\">Rating</td>" +
+            "</tr>"+
+            "<tr><td colspan = \"6\"><hr style = \"color: white;\"></td></tr>";
 
         let req = new XMLHttpRequest();
-        req.onreadystatechange = function ()
-        {
-            if (req.readyState === 4 && req.status === 200)
-            {
+        req.onreadystatechange = function () {
+            if (req.readyState === 4 && req.status === 200) {
                 let data = JSON.parse(req.responseText);
 
-                if(data.status === "error")
-                {
+                if (data.status === "error") {
                     display.innerHTML = "Error: " + data.message;
                     return;
                 }
 
-                for (let i = 0; i < data.data.length; i++)
-                {
-                    if (data.data[i].rating === null)
-                    {
+                for (let i = 0; i < data.data.length; i++) {
+                    if (data.data[i].rating === null) {
                         data.data[i].rating = "NA";
-                    }
-                    else
-                    {
+                    } else {
                         data.data[i].rating = Math.round(data.data[i].rating * 100) / 100.00;
                     }
 
-                    display.innerHTML += '<div class="wine">' +
-                        '<div><h4 class="wine-name">' + data.data[i].wine_name + '</h4></div>' +
-                        '<h4 class="producers">Winery: ' + data.data[i].winery_name + '</h4>' +
-                        '<br>' +
-                        '<h4 class="region">Region: ' + data.data[i].region_name + '</h4>' +
-                        '<ul>' +
-                        '<li>Type: ' + data.data[i].wine_type + '</li>' +
-                        '<li>Vintage: ' + data.data[i].vintage + '</li>' +
-                        '<li>Quality: ' + data.data[i].quality + '</li>' +
-                        '<li>Price:' + data.data[i].price + '</li>' +
-                        '</ul>' +
-                        '<h4 class="rating">Rating: ' + data.data[i].rating  + '</h4>' +
-                        '</div>';
+                    display.innerHTML += '<tr>' +
+                        '<td class="colWineName">' + data.data[i].wine_id + '</td>' +
+                        '<td class=\"colWineName\">' + data.data[i].wine_name + '</td>' +
+                        '<td style = "vertical-align: top; color: white;">' + data.data[i].winery_name + '</td>' +
+                        '<td style = "vertical-align: top; color: white;">' + data.data[i].region_name + '</td>' +
+                        '<td style = "vertical-align: top; color: white;">' +
+                        'Type: ' + data.data[i].wine_type + '<br>' +
+                        'Vintage: ' + data.data[i].vintage + '<br>' +
+                        'Quality: ' + data.data[i].quality + '<br>' +
+                        'Price:' + data.data[i].price +
+                        '</td>' +
+                        '<td style = "vertical-align: top; color: white;">' + data.data[i].rating + '</td>' +
+                        '</tr>'+
+                        '<tr><td colspan = "6"><br></td></tr>'+
+                        '<tr><td colspan = "6"><hr style = "color: white;"></td></tr>';
                 }
             }
         };
@@ -187,95 +194,28 @@ require_once("php/navbar.php");
         let winery = document.getElementById("wineries");
         let sort = document.getElementById("attributes");
 
-        if (name.value !== "")
-        {
+        if (name.value !== "") {
             let url = "../GWSAPI.php?type=SortWinesByName&wine_name=" + name.value;
             req.open("POST", url, false);
             req.send();
-        }
-        else if (region.value !== "default")
-        {
+        } else if (region.value !== "default") {
             let url = "../GWSAPI.php?type=SortWinesByRegion&region_id=" + region.value;
             req.open("POST", url, false);
             req.send();
-        }
-        else if(winery.value !== "default")
-        {
+        } else if (winery.value !== "default") {
             let url = "../GWSAPI.php?type=getWinesByWinery&winery_id=" + winery.value;
             req.open("POST", url, false);
             req.send();
-        }
-        else if(sort.value !== "default")
-        {
-            if (sort.value === "price")
-            {
+        } else if (sort.value !== "default") {
+            if (sort.value === "price") {
                 let url = "../GWSAPI.php?type=SortWinesByPrice";
                 req.open("POST", url, false);
                 req.send();
-            }
-            else if (sort.value === "quality")
-            {
+            } else if (sort.value === "quality") {
                 let url = "../GWSAPI.php?type=SortWinesByQuality";
                 req.open("POST", url, false);
                 req.send();
             }
-        }
-    }
-
-    function wineReview()
-    {
-        let display = document.getElementById("wine_cards");
-
-        display.innerHTML = "";
-
-        let req = new XMLHttpRequest();
-        req.onreadystatechange = function ()
-        {
-            if (req.readyState === 4 && req.status === 200)
-            {
-                let data = JSON.parse(req.responseText);
-
-                if(data.status === "error")
-                {
-                    display.innerHTML = "Error: " + data.message;
-                    return;
-                }
-
-                for (let i = 0; i < data.data.length; i++)
-                {
-                    if (data.data[i].rating === null)
-                    {
-                        data.data[i].rating = "NA";
-                    }
-                    else
-                    {
-                        data.data[i].rating = Math.round(data.data[i].rating * 100) / 100.00;
-                    }
-
-                    display.innerHTML += '<div class="wine">' +
-                        '<div><h4 class="wine-name">' + data.data[i].wine_name + '</h4></div>' +
-                        '<h4 class="producers">Winery: ' + data.data[i].winery_name + '</h4>' +
-                        '<br>' +
-                        '<h4 class="region">Region: ' + data.data[i].region_name + '</h4>' +
-                        '<ul>' +
-                        '<li>Type: ' + data.data[i].wine_type + '</li>' +
-                        '<li>Vintage: ' + data.data[i].vintage + '</li>' +
-                        '<li>Quality: ' + data.data[i].quality + '</li>' +
-                        '<li>Price:' + data.data[i].price + '</li>' +
-                        '</ul>' +
-                        '<h4 class="rating">Rating: ' + data.data[i].rating  + '</h4>' +
-                        '</div>';
-                }
-            }
-        };
-
-        let name = document.getElementById("search-wines");
-
-        if (name.value !== "")
-        {
-            let url = "../GWSAPI.php?type=SortWinesByName&wine_name=" + name.value;
-            req.open("POST", url, false);
-            req.send();
         }
     }
 
