@@ -48,14 +48,34 @@ require_once("php/navbar.php");
             </select>
         </div>
         <div>
+            <input type="button" id="rate" value="Rate" style="text-align: center; margin: 5px" onclick="showRatingForm()">
             <input type="button" id="submit" value="Submit" style="text-align: center; margin: 5px" onclick="filterWines()">
             <input type="button" id="reset" value="Reset" style="text-align: center; margin: 5px" onclick="reset()">
         </div>
+        <form action="">
+            <h3>Rating box:</h3>
+            <label for="wine-id">Wine id</label>
+            <input type="number" name="wine-id" id="wine-id" placeholder="enter wine id">
+            <label for="rating-description">Rating description</label>
+            <input type="text" name="rating-description" id="rating-description" placeholder="enter rating description">
+            <label for="rating">Rating</label>
+            <input type="number" name="rating" id="rating" placeholder="enter rating" min="1" max="100" step="1">
+            <input id="submit-btn" type="submit" value="Submit" style="background-color: #F45B69;">
+        </form>
     </div>
     <div id="wine_cards" class="wine-cards">
     </div>
 </div>
 <script>
+    function showRatingForm() {
+        let form = document.querySelector("form");
+        if (form.style.display === "none") {
+            form.style.display = "block";
+        } else {
+            form.style.display = "none";
+        }
+    }
+
     function loadWines()
     {
         let display = document.getElementById("wine_cards");
