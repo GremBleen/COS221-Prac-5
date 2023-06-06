@@ -8,9 +8,11 @@
 <?php
 require_once("php/navbar.php")
 ?>
-<table class="tableOfInfo" id="tableOfInfo">
-    
-</table>
+<div class="container-a" style="margin-top: 50px;">
+    <table class="tableOfInfo" id="tableOfInfo">
+
+    </table>
+</div>
 <tr><td colspan = "6"><hr style = "color: white;"></td></tr>
 <script>
     function loadReviews() {
