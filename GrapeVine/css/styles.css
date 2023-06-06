@@ -197,7 +197,8 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #456990;
+    text-align: center;
+    background-color: #e5e5e5;
     padding: 0.5rem;
     border-radius: 1.2rem;
     position: fixed;
@@ -205,7 +206,6 @@ form {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 16rem;
-    display: none;
 }
 
 form input, form label {

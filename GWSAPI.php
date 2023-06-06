@@ -280,7 +280,7 @@ function getWinesByWinery($conn, $winery_id)
 
 function insertReview($conn, $wine_id, $rating, $comment)
 {
-    if (isset($_SESSION["user_id"]))
+    if (isset($_SESSION["user_id"]) && $wine_id != null && $rating != null && $comment != null)
     {
         $user_id = $_SESSION["user_id"];
         $sql = "INSERT INTO review(wine_id, rating, designation, user_id) VALUES ('$wine_id', '$rating', '$comment', '$user_id')";
@@ -296,7 +296,7 @@ function insertReview($conn, $wine_id, $rating, $comment)
         return json_encode(array(
             "status" => "error",
             "timestamp" => strval(time() * 1000),
-            "message" => "You are not logged in"
+            "message" => "Error: Please check you are logged in and you fill in every field"
         ));
     }
 }
@@ -401,6 +401,47 @@ function getAllWineries($conn)
             "status" => "error",
             "timestamp" => strval(time() * 1000),
             "message" => "No data found"
+        ));
+    }
+}
+
+function addWine($conn,$wine_name, $wine_type, $wine_vintage, $wine_quality, $wine_price, $winery_id)
+{
+    if (isset($_SESSION["user_id"]))
+    {
+        $user_id = $_SESSION["user_id"];
+
+        $query = "SELECT * FROM winery JOIN location ON winery.location_id = location.location_id JOIN region ON location.region_id = region.region_id WHERE winery_id='$winery_id' AND mngr_id='$user_id'";
+        $res = $conn->query($query);
+        if($res->num_rows > 0)
+        {
+            $row = $res->fetch_assoc();
+            $region_id = $row["region_id"];
+
+            $sql = "INSERT INTO wine(wine_name, wine_type, vintage, region_id, fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, density, pH, sulphates, alchohol, quality, price)"
+                    . "VALUES ('$wine_name', '$wine_type', '$wine_vintage', '$region_id', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '$wine_quality', '$wine_price')";
+            $result = $conn->query($sql);
+
+            return json_encode(array(
+                "status" => "success",
+                "timestamp" => strval(time() * 1000),
+                "message" => $result
+            ));
+        }
+        else
+        {
+            return json_encode(array(
+                "status" => "error",
+                "timestamp" => strval(time() * 1000),
+                "message" => "Error: Please check you are logged in as a winery manager"
+            ));
+        }
+    } else
+    {
+        return json_encode(array(
+            "status" => "error",
+            "timestamp" => strval(time() * 1000),
+            "message" => "Error: Please check you are logged in and you fill in every field"
         ));
     }
 }

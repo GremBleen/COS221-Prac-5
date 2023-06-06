@@ -52,15 +52,16 @@ require_once("php/navbar.php");
             <input type="button" id="submit" value="Submit" style="text-align: center; margin: 5px" onclick="filterWines()">
             <input type="button" id="reset" value="Reset" style="text-align: center; margin: 5px" onclick="reset()">
         </div>
-        <form onsubmit="getFormData(); return false">
-            <h3>Rating box:</h3>
-            <label for="wine-id">Wine id</label>
-            <input type="number" name="wine-id" id="wine-id" placeholder="enter wine id">
-            <label for="rating-description">Rating description</label>
-            <input type="text" name="rating-description" id="rating-description" placeholder="enter rating description">
-            <label for="rating">Rating</label>
-            <input type="number" name="rating" id="rating" placeholder="enter rating" min="1" max="100" step="1">
+        <form onsubmit="getFormData(); return false" style="display: none">
+            <h3 style="color: black;">Rating box:</h3>
+            <label for="wine-id" style="color: black;">Wine id</label>
+            <input type="number" name="wine-id" id="wine-id" placeholder="Enter wine id">
+            <label for="rating-description" style="color: black;">Rating description</label>
+            <input type="text" name="rating-description" id="rating-description" placeholder="Enter rating description">
+            <label for="rating" style="color: black;">Rating</label>
+            <input type="number" name="rating" id="rating" placeholder="Enter rating" min="1" max="100" step="1">
             <input id="submit-btn" type="submit" value="Submit" style="background-color: #F45B69;">
+            <input id="cncl-btn" type="button" value="Cancel" style="background-color: #F45B69;" onclick="hideRatingForm()">
         </form>
     </div>
     <table class="tableOfInfo" id="tableOfInfo">
@@ -104,6 +105,16 @@ require_once("php/navbar.php");
         let form = document.querySelector("form");
         if (form.style.display === "none") {
             form.style.display = "block";
+        } else {
+            form.style.display = "none";
+        }
+    }
+
+    function hideRatingForm()
+    {
+        let form = document.querySelector("form");
+        if (form.style.display === "block") {
+            form.style.display = "none";
         } else {
             form.style.display = "none";
         }
