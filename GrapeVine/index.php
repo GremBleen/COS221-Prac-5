@@ -82,18 +82,15 @@ require_once("php/navbar.php");
 
                     display.innerHTML += '<div class="wine">' +
                         '<div><h4 class="wine-name">' + data.data[i].wine_name + '</h4></div>' +
-                        '<br>' +
                         '<h4 class="producers">Winery: ' + data.data[i].winery_name + '</h4>' +
                         '<br>' +
                         '<h4 class="region">Region: ' + data.data[i].region_name + '</h4>' +
-                        '<br>' +
                         '<ul>' +
                         '<li>Type: ' + data.data[i].wine_type + '</li>' +
                         '<li>Vintage: ' + data.data[i].vintage + '</li>' +
                         '<li>Quality: ' + data.data[i].quality + '</li>' +
                         '<li>Price:' + data.data[i].price + '</li>' +
                         '</ul>' +
-                        '<br>' +
                         '<h4 class="rating">Rating: ' + data.data[i].rating  + '</h4>' +
                         '</div>';
                 }
@@ -138,18 +135,15 @@ require_once("php/navbar.php");
 
                     display.innerHTML += '<div class="wine">' +
                         '<div><h4 class="wine-name">' + data.data[i].wine_name + '</h4></div>' +
-                        '<br>' +
                         '<h4 class="producers">Winery: ' + data.data[i].winery_name + '</h4>' +
                         '<br>' +
                         '<h4 class="region">Region: ' + data.data[i].region_name + '</h4>' +
-                        '<br>' +
                         '<ul>' +
                         '<li>Type: ' + data.data[i].wine_type + '</li>' +
                         '<li>Vintage: ' + data.data[i].vintage + '</li>' +
                         '<li>Quality: ' + data.data[i].quality + '</li>' +
                         '<li>Price:' + data.data[i].price + '</li>' +
                         '</ul>' +
-                        '<br>' +
                         '<h4 class="rating">Rating: ' + data.data[i].rating  + '</h4>' +
                         '</div>';
                 }

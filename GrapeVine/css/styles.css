@@ -60,30 +60,31 @@ body {
     flex-basis: 270px;
     text-align: center;
     justify-content: center;
-    max-width: 75%;
 }
 
 .wine-cards{
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
     text-align: center;
+    justify-content: center;
     margin: auto;
-    width: 80%;
+    width: 90%;
 }
 
 .producers {
     margin: auto;
-    padding: 1px;
+    padding: 5px;
 }
 
 .region {
     margin: auto;
-    padding: 1px;
+    padding: 5px;
 }
 
 .rating{
     margin: auto;
-    padding: 1px;
+    padding: 5px;
 }
 
 .info{
@@ -94,7 +95,7 @@ body {
     width: fit-content;
     background-color: #456990;
     margin: 1rem;
-    padding: 0.4rem;
+    padding: 5rem;
     border-radius: 1.2rem;
 }
 
@@ -106,7 +107,7 @@ body {
     flex-basis: 270px;
     color: #FFFFFF;
     width: 100%;
-    min-width: 100%;
+    max-width: 532px;
     background-color: #456990;
     margin: 1rem;
     padding: 0.4rem;
@@ -162,4 +163,9 @@ select {
     border-width: 0px;
     border-radius: 0.5rem;
     box-shadow: 2px 3px 8px black;
+}
+
+tr{
+    width: 270px;
+    max-width: 270px;
 }
