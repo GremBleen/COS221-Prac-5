@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "Grem";
 $password = "0504";
@@ -174,14 +176,31 @@ function SortWinesByRegion($conn, $region_id, $numberOfWines = 25) {
     }
 }
 
+function insertReview($conn, $wine_id, $rating, $comment)
+{
+    if(isset($_SESSION["user_id"]))
+    {
+        $sql = "INSERT INTO review(wine_id, rating, country, designation, province, regions, user_id)";
+    }
+    else
+    {
+        return json_encode(array(
+            "status" => "eror",
+            "timestamp" => strval(time() * 1000),
+            "message" => "You are not logged in"
+        ));
+    }
+}
+
 function SortWinesByName($conn, $wine_name) {
-    $sql = "SELECT `wine_name`, `wine_type`, `region_name`, `winery_name`, `vintage`, `quality`, `price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id WHERE `wine_name` LIKE '%$wine_name%' GROUP BY wine.wine_id";
+    $sql = "SELECT `wine_id`, `wine_name`, `wine_type`, `region_name`, `winery_name`, `vintage`, `quality`, `price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id WHERE `wine_name` LIKE '%$wine_name%' GROUP BY wine.wine_id";
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $wines = array();
         while($row = $result->fetch_assoc()) {
             $wine = array(
+                "wine_id" => $row["wine_id"],
                 "wine_name" => $row["wine_name"],
                 "wine_type" => $row["wine_type"],
                 "region_name" => $row["region_name"],
