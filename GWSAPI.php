@@ -369,6 +369,42 @@ function getAllRatings($conn)
     }
 }
 
+function getAllWineries($conn)
+{
+    $sql = "SELECT w.winery_id, w.winery_name, l.continent, l.country, r.region_name, l.address, w.verified, AVG(rt.rating) FROM `winery` AS w JOIN location AS l ON w.location_id = l.location_id JOIN region AS r ON l.region_id = r.region_id JOIN ratings AS rt ON w.rating_id = rt.rating_id GROUP BY w.winery_id; ";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0)
+    {
+        $data = array();
+        while ($row = $result->fetch_assoc())
+        {
+            $td = array(
+                "winery_id" => $row["winery_id"],
+                "winery_name" => $row["winery_name"],
+                "continent" => $row["continent"],
+                "country" => $row["country"],
+                "region_name" => $row["region_name"],
+                "address" => $row["address"],
+                "verified" => $row["verified"],
+                "rating" => $row["AVG(rt.rating)"]
+            );
+            array_push($data, $td);
+        }
+        return json_encode(array(
+            "status" => "success",
+            "timestamp" => strval(time() * 1000),
+            "data" => $data
+        ));
+    } else
+    {
+        return json_encode(array(
+            "status" => "error",
+            "timestamp" => strval(time() * 1000),
+            "message" => "No data found"
+        ));
+    }
+}
+
 header('Content-Type: application/json');
 if (isset($_GET['type']))
 {
@@ -413,6 +449,10 @@ if (isset($_GET['type']))
         $comment = $_GET["comment"];
 
         echo insertReview($conn, $wine_id, $rating, $comment);
+    }
+    else if($type === "getAllWineries")
+    {
+        echo getAllWineries($conn);
     }
     else
     {
