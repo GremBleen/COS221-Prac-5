@@ -2,7 +2,7 @@
 session_start();
 
 $servername = "localhost";
-$username = "PA5";
+$username = "Grem";
 $password = "0504";
 $dbname = "gws";
 
@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 function getWinesDetails($conn, $numberOfWines = 10) {
-    $sql = "SELECT wine.`wine_name`,`wine_type`, `region_name`, `winery_name`, `vintage`,`quality`,`price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id GROUP BY wine.wine_id";
+    $sql = "SELECT wine.`wine_id`, `wine_name`,`wine_type`, `region_name`, `winery_name`, `vintage`,`quality`,`price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id GROUP BY wine.wine_id";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $wines = array();
@@ -198,7 +198,7 @@ function insertReview($conn, $wine_id, $rating, $comment)
 }
 
 function SortWinesByName($conn, $wine_name) {
-    $sql = "SELECT wine.    `wine_id`, `wine_name`, `wine_type`, `region_name`, `winery_name`, `vintage`, `quality`, `price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id WHERE `wine_name` LIKE '%$wine_name%' GROUP BY wine.wine_id";
+    $sql = "SELECT wine.`wine_id`, `wine_name`, `wine_type`, `region_name`, `winery_name`, `vintage`, `quality`, `price`, AVG(rating) FROM `wine` JOIN `region` ON wine.region_id = region.region_id JOIN winery ON wine.winery_id = winery.winery_id LEFT JOIN review ON wine.wine_id = review.wine_id WHERE `wine_name` LIKE '%$wine_name%' GROUP BY wine.wine_id";
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -232,16 +232,16 @@ function SortWinesByName($conn, $wine_name) {
 }
 
 function getWinesByWinery($conn, $winery_id){
-    $sql = "SELECT w.`wine_id`, w.`wine_name`, w.`wine_type`, r.region_name, w.`vintage`, w.`quality`, w.`price`, w.`winery_id`, wn.`winery_name`, AVG(rating) FROM `wine` AS w INNER JOIN `winery` AS wn ON w.`winery_id` = wn.`winery_id` JOIN region AS r ON w.region_id = r.region_id LEFT JOIN review ON w.wine_id = review.wine_id WHERE w.`winery_id` = '$winery_id' GROUP BY w.wine_id";
+    $sql = "SELECT w.`wine_name`, w.`wine_type`, r.region_name, w.`vintage`, w.`quality`, w.`price`, w.`winery_id`, wn.`winery_name`, AVG(rating) FROM `wine` AS w INNER JOIN `winery` AS wn ON w.`winery_id` = wn.`winery_id` JOIN region AS r ON w.region_id = r.region_id LEFT JOIN review ON w.wine_id = review.wine_id WHERE w.`winery_id` = '$winery_id' GROUP BY w.wine_id";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $wines = array();
         while($row = $result->fetch_assoc()) {
             $wine = array(
                 "winery_id" => $row["winery_id"],
-                "wine_id" => $row["wine_id"],
                 "winery_name" => $row["winery_name"],
                 "wine_name" => $row["wine_name"],
+                "wine_id" => $row["wine_id"],
                 "wine_type" => $row["wine_type"],
                 "region_name" => $row["region_name"],
                 "vintage" => $row["vintage"],
