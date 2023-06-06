@@ -72,6 +72,16 @@ body {
     width: 90%;
 }
 
+.wine-id{
+    display: flex;
+    flex-basis: 270px;
+    color: #F45B69;
+    font-size: 21px;
+    flex-basis: 270px;
+    text-align: center;
+    justify-content: center;
+}
+
 .producers {
     margin: auto;
     padding: 5px;
@@ -88,15 +98,7 @@ body {
 }
 
 .info{
-    display: flex;
-    text-align: center;
-    flex-wrap: wrap;
-    color: #FFFFFF;
-    width: fit-content;
-    background-color: #456990;
-    margin: 1rem;
-    padding: 5rem;
-    border-radius: 1.2rem;
+    margin: 10px;
 }
 
 .wine {
@@ -143,6 +145,26 @@ input {
     border-radius: 1.2rem;
     color: #FFFFFF;
 }
+
+.tableOfInfo{
+    width:90%;
+    background-color: #456990;
+    border-radius:6px;
+    padding: 40px;
+    text-align: left;
+}
+.tableHeaderRow{
+    font-size: 24px;
+    font-weight: bold;
+}
+.colWineName{
+    color: #F45B69;
+    font-size: 21px;
+    max-width: 400px;
+    vertical-align: top;
+    font-weight: bold;
+}
+
 
 #search-wineries {
     margin-top: 2rem;
