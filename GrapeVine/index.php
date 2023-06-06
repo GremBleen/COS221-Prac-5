@@ -104,7 +104,7 @@ require_once("php/navbar.php");
     function showRatingForm() {
         let form = document.querySelector("form");
         if (form.style.display === "none") {
-            form.style.display = "block";
+            form.style.display = "flex";
         } else {
             form.style.display = "none";
         }
