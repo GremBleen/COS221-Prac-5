@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `accommodation_options`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `accommodation_options` (
-  `accommodation_id` int(11) NOT NULL,
+  `accommodation_id` int(11) NOT NULL AUTO_INCREMENT,
   `accommodation_name` varchar(255) NOT NULL,
   `location_id` int(11) NOT NULL,
   `description` text DEFAULT NULL,
@@ -64,7 +64,7 @@ DROP TABLE IF EXISTS `events_and_festivals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `events_and_festivals` (
-  `event_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL AUTO_INCREMENT,
   `event_name` varchar(255) NOT NULL,
   `event_date` date DEFAULT NULL,
   `location_id` int(11) NOT NULL,
@@ -107,7 +107,7 @@ DROP TABLE IF EXISTS `local_attractions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `local_attractions` (
-  `attraction_id` int(11) NOT NULL,
+  `attraction_id` int(11) NOT NULL AUTO_INCREMENT,
   `attraction_name` varchar(255) NOT NULL,
   `region_id` int(11) NOT NULL,
   `description` text DEFAULT NULL,
@@ -145,7 +145,7 @@ DROP TABLE IF EXISTS `location`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `location` (
-  `location_id` int(11) NOT NULL,
+  `location_id` int(11) NOT NULL AUTO_INCREMENT,
   `continent` varchar(255) NOT NULL,
   `country` varchar(255) NOT NULL,
   `region_id` int(11) NOT NULL,
@@ -229,7 +229,7 @@ DROP TABLE IF EXISTS `ratings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ratings` (
-  `rating_id` int(11) NOT NULL,
+  `rating_id` int(11) NOT NULL AUTO_INCREMENT,
   `rating_title` varchar(255) NOT NULL,
   `rating` decimal(2,1) NOT NULL,
   `comment` varchar(255) DEFAULT NULL,
@@ -315,7 +315,7 @@ DROP TABLE IF EXISTS `region`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `region` (
-  `region_id` int(11) NOT NULL,
+  `region_id` int(11) NOT NULL AUTO_INCREMENT,
   `region_name` varchar(255) NOT NULL,
   PRIMARY KEY (`region_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -344,7 +344,7 @@ DROP TABLE IF EXISTS `restaurants_dining`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `restaurants_dining` (
-  `restaurant_id` int(11) NOT NULL,
+  `restaurant_id` int(11) NOT NULL AUTO_INCREMENT,
   `restaurant_name` varchar(255) NOT NULL,
   `location_id` int(11) NOT NULL,
   `cuisine_type` varchar(255) DEFAULT NULL,
@@ -387,7 +387,7 @@ DROP TABLE IF EXISTS `review`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `review` (
-  `review_id` int(11) NOT NULL,
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
   `wine_id` int(11) NOT NULL,
   `rating` int(11) DEFAULT NULL,
   `country` varchar(255) DEFAULT NULL,
@@ -442,7 +442,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -518,7 +518,7 @@ DROP TABLE IF EXISTS `weather_information`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `weather_information` (
-  `weather_id` int(11) NOT NULL,
+  `weather_id` int(11) NOT NULL AUTO_INCREMENT,
   `region_id` int(11) NOT NULL,
   `date` date DEFAULT NULL,
   `weather_description` varchar(255) DEFAULT NULL,
@@ -551,7 +551,7 @@ DROP TABLE IF EXISTS `wine`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wine` (
-  `wine_id` int(11) NOT NULL,
+  `wine_id` int(11) NOT NULL AUTO_INCREMENT,
   `winery_id` int(11) NOT NULL,
   `wine_name` varchar(255) NOT NULL,
   `wine_type` varchar(255) NOT NULL,
@@ -715,7 +715,7 @@ DROP TABLE IF EXISTS `wine_clubs_memberships`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wine_clubs_memberships` (
-  `club_id` int(11) NOT NULL,
+  `club_id` int(11) NOT NULL AUTO_INCREMENT,
   `winery_id` int(11) NOT NULL,
   `club_name` varchar(255) NOT NULL,
   `benefits` text DEFAULT NULL,
@@ -754,7 +754,7 @@ DROP TABLE IF EXISTS `wine_education`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wine_education` (
-  `education_id` int(11) NOT NULL,
+  `education_id` int(11) NOT NULL AUTO_INCREMENT,
   `education_provider` varchar(255) NOT NULL,
   `education_title` varchar(255) NOT NULL,
   `education_type` varchar(255) NOT NULL,
@@ -799,7 +799,7 @@ DROP TABLE IF EXISTS `wine_tasting_information`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wine_tasting_information` (
-  `tasting_id` int(11) NOT NULL,
+  `tasting_id` int(11) NOT NULL AUTO_INCREMENT,
   `winery_id` int(11) NOT NULL,
   `tasting_fees` decimal(8,2) DEFAULT NULL,
   `available_varietals` varchar(255) DEFAULT NULL,
@@ -834,7 +834,7 @@ DROP TABLE IF EXISTS `wine_tips_guides`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wine_tips_guides` (
-  `tip_id` int(11) NOT NULL,
+  `tip_id` int(11) NOT NULL AUTO_INCREMENT,
   `tip_title` varchar(255) NOT NULL,
   `content` text DEFAULT NULL,
   PRIMARY KEY (`tip_id`)
@@ -959,7 +959,7 @@ DROP TABLE IF EXISTS `wine_trails_and_routes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wine_trails_and_routes` (
-  `trail_id` int(11) NOT NULL,
+  `trail_id` int(11) NOT NULL AUTO_INCREMENT,
   `trail_name` varchar(255) NOT NULL,
   `location_id` int(11) NOT NULL,
   `itinerary` text DEFAULT NULL,
@@ -1001,7 +1001,7 @@ DROP TABLE IF EXISTS `wine_varietals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wine_varietals` (
-  `varietal_id` int(11) NOT NULL,
+  `varietal_id` int(11) NOT NULL AUTO_INCREMENT,
   `winery_id` int(11) NOT NULL,
   `varietal_name` varchar(255) NOT NULL,
   `region_id` int(11) NOT NULL,
@@ -1154,7 +1154,7 @@ DROP TABLE IF EXISTS `winery`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `winery` (
-  `winery_id` int(11) NOT NULL,
+  `winery_id` int(11) NOT NULL AUTO_INCREMENT,
   `winery_name` varchar(255) NOT NULL,
   `location_id` int(11) NOT NULL,
   `rating_id` int(11) DEFAULT NULL,
