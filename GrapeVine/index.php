@@ -93,13 +93,14 @@ require_once("php/navbar.php");
         let display = document.getElementById("tableOfInfo");
 
         display.innerHTML = "<tr class = \"tableHeaderRow\">" +
+            "<td style = \"color:white;\">Wine ID</td>" +
             "<td style = \"color:white;\">Name</td>" +
             "<td style = \"color:white;\">Produced By</td>" +
             "<td style = \"color:white;\">Region</td>" +
             "<td style = \"color:white;\">Information</td>" +
             "<td style = \"color:white;\">Rating</td>" +
             "</tr>"+
-            "<tr><td colspan = \"5\"><hr style = \"color: white;\"></td></tr>";
+            "<tr><td colspan = \"6\"><hr style = \"color: white;\"></td></tr>";
 
         let req = new XMLHttpRequest();
         req.onreadystatechange = function () {
@@ -114,6 +115,7 @@ require_once("php/navbar.php");
                     }
 
                     display.innerHTML += '<tr>' +
+                        '<td class="colWineName">' + data.data[i].wine_id + '</td>' +
                         '<td class=\"colWineName\">' + data.data[i].wine_name + '</td>' +
                         '<td style = "vertical-align: top; color: white;">' + data.data[i].winery_name + '</td>' +
                         '<td style = "vertical-align: top; color: white;">' + data.data[i].region_name + '</td>' +
@@ -125,8 +127,8 @@ require_once("php/navbar.php");
                         '</td>' +
                         '<td style = "vertical-align: top; color: white;">' + data.data[i].rating + '</td>' +
                         '</tr>'+
-                        '<tr><td colspan = "5"><br></td></tr>'+
-                        '<tr><td colspan = "5"><hr style = "color: white;"></td></tr>';
+                        '<tr><td colspan = "6"><br></td></tr>'+
+                        '<tr><td colspan = "6"><hr style = "color: white;"></td></tr>';
                 }
             }
         };
@@ -142,13 +144,14 @@ require_once("php/navbar.php");
         let display = document.getElementById("tableOfInfo");
 
         display.innerHTML = "<tr class = \"tableHeaderRow\">" +
+            "<td style = \"color:white;\">Wine ID</td>" +
             "<td style = \"color:white;\">Name</td>" +
             "<td style = \"color:white;\">Produced By</td>" +
             "<td style = \"color:white;\">Region</td>" +
             "<td style = \"color:white;\">Information</td>" +
             "<td style = \"color:white;\">Rating</td>" +
             "</tr>"+
-            "<tr><td colspan = \"5\"><hr style = \"color: white;\"></td></tr>";
+            "<tr><td colspan = \"6\"><hr style = \"color: white;\"></td></tr>";
 
         let req = new XMLHttpRequest();
         req.onreadystatechange = function () {
@@ -168,6 +171,7 @@ require_once("php/navbar.php");
                     }
 
                     display.innerHTML += '<tr>' +
+                        '<td class="colWineName">' + data.data[i].wine_id + '</td>' +
                         '<td class=\"colWineName\">' + data.data[i].wine_name + '</td>' +
                         '<td style = "vertical-align: top; color: white;">' + data.data[i].winery_name + '</td>' +
                         '<td style = "vertical-align: top; color: white;">' + data.data[i].region_name + '</td>' +
@@ -179,8 +183,8 @@ require_once("php/navbar.php");
                         '</td>' +
                         '<td style = "vertical-align: top; color: white;">' + data.data[i].rating + '</td>' +
                         '</tr>'+
-                        '<tr><td colspan = "5"><br></td></tr>'+
-                        '<tr><td colspan = "5"><hr style = "color: white;"></td></tr>';
+                        '<tr><td colspan = "6"><br></td></tr>'+
+                        '<tr><td colspan = "6"><hr style = "color: white;"></td></tr>';
                 }
             }
         };

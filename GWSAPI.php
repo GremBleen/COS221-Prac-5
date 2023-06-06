@@ -232,7 +232,7 @@ function SortWinesByName($conn, $wine_name) {
 }
 
 function getWinesByWinery($conn, $winery_id){
-    $sql = "SELECT w.`wine_name`, w.`wine_type`, r.region_name, w.`vintage`, w.`quality`, w.`price`, w.`winery_id`, wn.`winery_name`, AVG(rating) FROM `wine` AS w INNER JOIN `winery` AS wn ON w.`winery_id` = wn.`winery_id` JOIN region AS r ON w.region_id = r.region_id LEFT JOIN review ON w.wine_id = review.wine_id WHERE w.`winery_id` = '$winery_id' GROUP BY w.wine_id";
+    $sql = "SELECT w.`wine_id`, w.`wine_name`, w.`wine_type`, r.region_name, w.`vintage`, w.`quality`, w.`price`, w.`winery_id`, wn.`winery_name`, AVG(rating) FROM `wine` AS w INNER JOIN `winery` AS wn ON w.`winery_id` = wn.`winery_id` JOIN region AS r ON w.region_id = r.region_id LEFT JOIN review ON w.wine_id = review.wine_id WHERE w.`winery_id` = '$winery_id' GROUP BY w.wine_id";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $wines = array();
