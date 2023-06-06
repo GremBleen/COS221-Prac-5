@@ -146,6 +146,26 @@ input {
     color: #FFFFFF;
 }
 
+.tableOfInfo{
+    width:90%;
+    background-color: #456990;
+    border-radius:6px;
+    padding: 40px;
+    text-align: left;
+}
+.tableHeaderRow{
+    font-size: 24px;
+    font-weight: bold;
+}
+.colWineName{
+    color: #F45B69;
+    font-size: 21px;
+    max-width: 400px;
+    vertical-align: top;
+    font-weight: bold;
+}
+
+
 #search-wineries {
     margin-top: 2rem;
 }
