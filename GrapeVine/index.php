@@ -75,6 +75,7 @@ require_once("php/navbar.php");
         let rating = document.getElementById("rating").value;
         insertRating(wineId, ratingDescription, rating);
         showRatingForm();
+        loadWines();
     }
 
     function insertRating(wineId, ratingDescription, rating) {

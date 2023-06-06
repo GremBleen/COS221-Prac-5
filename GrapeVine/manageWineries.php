@@ -135,13 +135,18 @@ require_once("php/navbar.php");
 
     function addWine()
     {
-        let wine_id = document.getElementById("wine-id");
         let wine_name = document.getElementById("wine-name");
         let wine_type = document.getElementById("wine-type");
         let wine_vintage = document.getElementById("wine-vintage");
         let wine_quality = document.getElementById("wine-quality");
         let wine_price = document.getElementById("wine-price");
         let winery_id = document.getElementById("wineries");
+
+        if (wine_name.value === "" || wine_type.value === "" || wine_vintage.value === "" || wine_quality.value === "" || wine_price.value === "" || winery_id.value === "default")
+        {
+            alert("Error, please fill in all fields");
+            return;
+        }
 
         let req = new XMLHttpRequest();
         req.onreadystatechange = function ()
@@ -161,16 +166,17 @@ require_once("php/navbar.php");
             }
         }
 
-        let url = "../GWSAPI.php?type=addWine" +
-            + "&wine_name=" + wine_name
-            + "&wine_type=" + wine_type
-            + "&wine_vintage=" + wine_vintage
-            + "&wine_quality=" + wine_quality
-            + "&wine_price=" + wine_price
-            + "&winery_id=" + winery_id;
+        let url = "../GWSAPI.php?type=addWine&wine_name=" + wine_name.value
+            + "&wine_type=" + wine_type.value
+            + "&wine_vintage=" + wine_vintage.value
+            + "&wine_quality=" + wine_quality.value
+            + "&wine_price=" + wine_price.value
+            + "&winery_id=" + winery_id.value;
 
         req.open("POST", url, false);
         req.send();
+        hideAddWineForm();
+        filterWines();
     }
 
     function showAddWineForm() {
