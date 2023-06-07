@@ -28,4 +28,8 @@ There are several functions defined in the code:
 
 12.getAllWineries($conn): Retrieves all Wineries from the database
 
+13.removeWine($conn, $wine_id, $winery_id)： To remove the wine from the wine table according to wine_id and winery_id.
+
+14.getAttractionsByRegionId($conn, $region_id): Retrieve the attraction_name and description from the local_attraction table according to the region_id
+
 Each function performs a database query using SQL statements to fetch the required data. The retrieved data is then stored in arrays and returned in JSON format.
